@@ -1,11 +1,12 @@
 import 'package:flutter/cupertino.dart';
+
 import '../models/event.dart';
 import '../utils/color_utils.dart';
 import '../utils/date_utils.dart';
 import '../utils/event_status.dart';
+import 'create_page.dart';
 import 'event_detail_page.dart';
 import 'explore_page.dart';
-import 'create_page.dart';
 import 'gallery_page.dart';
 import 'profile_page.dart';
 
@@ -18,21 +19,13 @@ class EventListPage extends StatelessWidget {
       tabBar: CupertinoTabBar(
         iconSize: 24,
         items: const [
-          BottomNavigationBarItem(
-            icon: Icon(CupertinoIcons.house),
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(CupertinoIcons.globe),
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(CupertinoIcons.add_circled),
-          ),
+          BottomNavigationBarItem(icon: Icon(CupertinoIcons.house)),
+          BottomNavigationBarItem(icon: Icon(CupertinoIcons.globe)),
+          BottomNavigationBarItem(icon: Icon(CupertinoIcons.add_circled)),
           BottomNavigationBarItem(
             icon: Icon(CupertinoIcons.photo_on_rectangle),
           ),
-          BottomNavigationBarItem(
-            icon: Icon(CupertinoIcons.person_circle),
-          ),
+          BottomNavigationBarItem(icon: Icon(CupertinoIcons.person_circle)),
         ],
       ),
       tabBuilder: (context, index) {
@@ -42,21 +35,13 @@ class EventListPage extends StatelessWidget {
               builder: (context) => const EventListContent(),
             );
           case 1:
-            return CupertinoTabView(
-              builder: (context) => const ExplorePage(),
-            );
+            return CupertinoTabView(builder: (context) => const ExplorePage());
           case 2:
-            return CupertinoTabView(
-              builder: (context) => const CreatePage(),
-            );
+            return CupertinoTabView(builder: (context) => const CreatePage());
           case 3:
-            return CupertinoTabView(
-              builder: (context) => const GalleryPage(),
-            );
+            return CupertinoTabView(builder: (context) => const GalleryPage());
           case 4:
-            return CupertinoTabView(
-              builder: (context) => const ProfilePage(),
-            );
+            return CupertinoTabView(builder: (context) => const ProfilePage());
           default:
             return CupertinoTabView(
               builder: (context) => const EventListContent(),
@@ -172,9 +157,7 @@ class _EventListContentState extends State<EventListContent> {
   void _navigateToDetail(Event event) {
     Navigator.push(
       context,
-      CupertinoPageRoute(
-        builder: (context) => EventDetailPage(event: event),
-      ),
+      CupertinoPageRoute(builder: (context) => EventDetailPage(event: event)),
     );
   }
 
@@ -195,22 +178,18 @@ class _EventListContentState extends State<EventListContent> {
 
     return events.where((event) {
       return event.eventDate.isAfter(now) &&
-             event.eventDate.isBefore(oneWeekLater);
+          event.eventDate.isBefore(oneWeekLater);
     }).toList();
   }
 
   @override
   Widget build(BuildContext context) {
     return CupertinoPageScaffold(
-      navigationBar: const CupertinoNavigationBar(
-        middle: Text('이벤트 목록'),
-      ),
+      navigationBar: const CupertinoNavigationBar(middle: Text('이벤트 목록')),
       child: SafeArea(
         child: CustomScrollView(
           slivers: [
-            CupertinoSliverRefreshControl(
-              onRefresh: _handleRefresh,
-            ),
+            CupertinoSliverRefreshControl(onRefresh: _handleRefresh),
             SliverToBoxAdapter(
               child: Padding(
                 padding: const EdgeInsets.fromLTRB(16, 16, 16, 12),
@@ -270,125 +249,142 @@ class _EventListContentState extends State<EventListContent> {
             SliverPadding(
               padding: const EdgeInsets.all(16),
               sliver: SliverList(
-                delegate: SliverChildBuilderDelegate(
-                  (context, index) {
-                    final event = filteredEvents[index];
-                    return GestureDetector(
-                      onTap: () => _navigateToDetail(event),
-                      child: Container(
-                        margin: const EdgeInsets.only(bottom: 16),
-                        padding: const EdgeInsets.all(16),
-                        decoration: BoxDecoration(
-                          color: CupertinoColors.white,
-                          borderRadius: BorderRadius.circular(12),
-                          boxShadow: [
-                            BoxShadow(
-                              color: CupertinoColors.systemGrey.withOpacity(0.2),
-                              blurRadius: 8,
-                              offset: const Offset(0, 2),
+                delegate: SliverChildBuilderDelegate((context, index) {
+                  final event = filteredEvents[index];
+                  return GestureDetector(
+                    onTap: () => _navigateToDetail(event),
+                    child: Container(
+                      margin: const EdgeInsets.only(bottom: 16),
+                      padding: const EdgeInsets.all(16),
+                      decoration: BoxDecoration(
+                        color: CupertinoColors.white,
+                        borderRadius: BorderRadius.circular(12),
+                        boxShadow: [
+                          BoxShadow(
+                            color: CupertinoColors.systemGrey.withOpacity(0.2),
+                            blurRadius: 8,
+                            offset: const Offset(0, 2),
+                          ),
+                        ],
+                      ),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          SizedBox(
+                            width: 120,
+                            height: 120,
+                            child: Stack(
+                              children: [
+                                ClipRRect(
+                                  borderRadius: BorderRadius.circular(8),
+                                  child: Image.network(
+                                    event.imageUrl,
+                                    width: 120,
+                                    height: 120,
+                                    fit: BoxFit.cover,
+                                    errorBuilder: (context, error, stackTrace) {
+                                      return Container(
+                                        width: 120,
+                                        height: 120,
+                                        color: CupertinoColors.systemGrey5,
+                                        child: const Icon(
+                                          CupertinoIcons.photo,
+                                          color: CupertinoColors.systemGrey,
+                                        ),
+                                      );
+                                    },
+                                  ),
+                                ),
+                                Positioned(
+                                  bottom: 0,
+                                  left: 0,
+                                  right: 0,
+                                  child: Opacity(
+                                    opacity: 0.8,
+                                    child: Container(
+                                      padding: const EdgeInsets.symmetric(
+                                        horizontal: 8,
+                                        vertical: 4,
+                                      ),
+                                      decoration: BoxDecoration(
+                                        color: getStatusColor(event.status),
+                                        borderRadius: const BorderRadius.only(
+                                          bottomLeft: Radius.circular(8),
+                                          bottomRight: Radius.circular(8),
+                                        ),
+                                      ),
+                                      child: Text(
+                                        event.status.displayName,
+                                        textAlign: TextAlign.center,
+                                        style: const TextStyle(
+                                          color: CupertinoColors.white,
+                                          fontSize: 11,
+                                          fontWeight: FontWeight.w600,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
                             ),
-                          ],
-                        ),
-                        child: Row(
-                          children: [
-                            ClipRRect(
-                              borderRadius: BorderRadius.circular(8),
-                              child: Image.network(
-                                event.imageUrl,
-                                width: 80,
-                                height: 80,
-                                fit: BoxFit.cover,
-                                errorBuilder: (context, error, stackTrace) {
-                                  return Container(
-                                    width: 80,
-                                    height: 80,
-                                    color: CupertinoColors.systemGrey5,
-                                    child: const Icon(
-                                      CupertinoIcons.photo,
+                          ),
+                          const SizedBox(width: 16),
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  event.title,
+                                  style: const TextStyle(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.w600,
+                                    color: CupertinoColors.label,
+                                  ),
+                                ),
+                                const SizedBox(height: 8),
+                                Row(
+                                  children: [
+                                    const Icon(
+                                      CupertinoIcons.person_fill,
+                                      size: 16,
                                       color: CupertinoColors.systemGrey,
                                     ),
-                                  );
-                                },
-                              ),
-                            ),
-                            const SizedBox(width: 16),
-                            Expanded(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Container(
-                                    padding: const EdgeInsets.symmetric(
-                                      horizontal: 12,
-                                      vertical: 6,
-                                    ),
-                                    decoration: BoxDecoration(
-                                      color: getStatusColor(event.status),
-                                      borderRadius: BorderRadius.circular(6),
-                                    ),
-                                    child: Text(
-                                      event.status.displayName,
+                                    const SizedBox(width: 4),
+                                    Text(
+                                      event.host,
                                       style: const TextStyle(
-                                        color: CupertinoColors.white,
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.w600,
-                                      ),
-                                    ),
-                                  ),
-                                  const SizedBox(height: 12),
-                                  Text(
-                                    event.title,
-                                    style: const TextStyle(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.w600,
-                                      color: CupertinoColors.label,
-                                    ),
-                                  ),
-                                  const SizedBox(height: 8),
-                                  Row(
-                                    children: [
-                                      const Icon(
-                                        CupertinoIcons.person_fill,
-                                        size: 16,
+                                        fontSize: 14,
                                         color: CupertinoColors.systemGrey,
                                       ),
-                                      const SizedBox(width: 4),
-                                      Text(
-                                        event.host,
-                                        style: const TextStyle(
-                                          fontSize: 14,
-                                          color: CupertinoColors.systemGrey,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  const SizedBox(height: 6),
-                                  Row(
-                                    children: [
-                                      const Icon(
-                                        CupertinoIcons.calendar,
-                                        size: 16,
+                                    ),
+                                  ],
+                                ),
+                                const SizedBox(height: 6),
+                                Row(
+                                  children: [
+                                    const Icon(
+                                      CupertinoIcons.calendar,
+                                      size: 16,
+                                      color: CupertinoColors.systemGrey,
+                                    ),
+                                    const SizedBox(width: 4),
+                                    Text(
+                                      formatEventDate(event.eventDate),
+                                      style: const TextStyle(
+                                        fontSize: 14,
                                         color: CupertinoColors.systemGrey,
                                       ),
-                                      const SizedBox(width: 4),
-                                      Text(
-                                        formatEventDate(event.eventDate),
-                                        style: const TextStyle(
-                                          fontSize: 14,
-                                          color: CupertinoColors.systemGrey,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              ),
+                                    ),
+                                  ],
+                                ),
+                              ],
                             ),
-                          ],
-                        ),
+                          ),
+                        ],
                       ),
-                    );
-                  },
-                  childCount: filteredEvents.length,
-                ),
+                    ),
+                  );
+                }, childCount: filteredEvents.length),
               ),
             ),
           ],
