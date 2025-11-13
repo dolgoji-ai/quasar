@@ -49,4 +49,16 @@ class AuthService {
     await _googleSignIn.signOut();
     _currentUser = null;
   }
+
+  Future<Map<String, String?>> getTokens() async {
+    if (_currentUser == null) {
+      throw Exception('No user signed in');
+    }
+
+    final GoogleSignInAuthentication auth = await _currentUser!.authentication;
+    return {
+      'idToken': auth.idToken,
+      'accessToken': auth.accessToken,
+    };
+  }
 }
