@@ -230,12 +230,12 @@ class _EventListContentState extends State<EventListContent> {
                           vertical: 10,
                         ),
                         decoration: BoxDecoration(
-                          color: CupertinoColors.white,
+                          color: CupertinoColors.systemGrey6,
                           border: Border.all(
                             color: showUpcomingOnly
-                                ? CupertinoColors.activeBlue
-                                : CupertinoColors.systemGrey4,
-                            width: 2,
+                                ? CupertinoColors.systemGrey
+                                : CupertinoColors.systemGrey6,
+                            width: 1,
                           ),
                           borderRadius: BorderRadius.circular(20),
                         ),
@@ -245,7 +245,7 @@ class _EventListContentState extends State<EventListContent> {
                             fontSize: 15,
                             fontWeight: FontWeight.w600,
                             color: showUpcomingOnly
-                                ? CupertinoColors.activeBlue
+                                ? CupertinoColors.systemGrey
                                 : CupertinoColors.systemGrey,
                           ),
                         ),
@@ -264,12 +264,12 @@ class _EventListContentState extends State<EventListContent> {
                           vertical: 10,
                         ),
                         decoration: BoxDecoration(
-                          color: CupertinoColors.white,
+                          color: CupertinoColors.systemGrey6,
                           border: Border.all(
                             color: showHostingOnly
-                                ? CupertinoColors.activeBlue
-                                : CupertinoColors.systemGrey4,
-                            width: 2,
+                                ? CupertinoColors.systemGrey
+                                : CupertinoColors.systemGrey6,
+                            width: 1,
                           ),
                           borderRadius: BorderRadius.circular(20),
                         ),
@@ -279,7 +279,7 @@ class _EventListContentState extends State<EventListContent> {
                             fontSize: 15,
                             fontWeight: FontWeight.w600,
                             color: showHostingOnly
-                                ? CupertinoColors.activeBlue
+                                ? CupertinoColors.systemGrey
                                 : CupertinoColors.systemGrey,
                           ),
                         ),
