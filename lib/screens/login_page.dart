@@ -87,25 +87,22 @@ class _LoginPageState extends State<LoginPage> {
                           borderRadius: BorderRadius.circular(40),
                         ),
                         child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             SvgPicture.asset(
                               'assets/images/google_g_logo.svg',
                               width: 36,
                               height: 36,
                             ),
-                            Expanded(
-                              child: Center(
-                                child: const Text(
-                                  'Google 로 로그인',
-                                  style: TextStyle(
-                                    fontSize: 24,
-                                    fontWeight: FontWeight.w500,
-                                    color: Color(0xFF1F1F1F),
-                                  ),
-                                ),
+                            const SizedBox(width: 12),
+                            const Text(
+                              'Google 계정으로 로그인',
+                              style: TextStyle(
+                                fontSize: 24,
+                                fontWeight: FontWeight.w500,
+                                color: Color(0xFF1F1F1F),
                               ),
                             ),
-                            const SizedBox(width: 48),
                           ],
                         ),
                       ),
