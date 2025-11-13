@@ -63,6 +63,7 @@ class EventListContent extends StatefulWidget {
 class _EventListContentState extends State<EventListContent> {
   List<Event> events = [];
   bool showUpcomingOnly = false;
+  bool showHostingOnly = false;
 
   @override
   void initState() {
@@ -84,7 +85,7 @@ class _EventListContentState extends State<EventListContent> {
         id: '9',
         status: EventStatus.scheduled,
         title: '팀 빌딩 워크샵',
-        host: '박영희',
+        host: 'dogoji-ai',
         imageUrl: 'https://picsum.photos/200/200?random=2',
         eventDate: DateTime(2025, 11, 19, 18, 0),
       ),
@@ -116,7 +117,7 @@ class _EventListContentState extends State<EventListContent> {
         id: '5',
         status: EventStatus.completed,
         title: '프로젝트 킥오프 미팅',
-        host: '정수진',
+        host: 'dogoji-ai',
         imageUrl: 'https://picsum.photos/200/200?random=4',
         eventDate: DateTime(2025, 3, 10, 10, 0),
       ),
@@ -140,7 +141,7 @@ class _EventListContentState extends State<EventListContent> {
         id: '2',
         status: EventStatus.completed,
         title: '월간 회고 모임',
-        host: '강민서',
+        host: 'dogoji-ai',
         imageUrl: 'https://picsum.photos/200/200?random=6',
         eventDate: DateTime(2024, 11, 30, 15, 30),
       ),
@@ -170,17 +171,24 @@ class _EventListContentState extends State<EventListContent> {
   }
 
   List<Event> get filteredEvents {
-    if (!showUpcomingOnly) {
-      return events;
+    var filtered = events;
+
+    if (showUpcomingOnly) {
+      final now = DateTime.now();
+      final oneWeekLater = now.add(const Duration(days: 7));
+      filtered = filtered.where((event) {
+        return event.eventDate.isAfter(now) &&
+            event.eventDate.isBefore(oneWeekLater);
+      }).toList();
     }
 
-    final now = DateTime.now();
-    final oneWeekLater = now.add(const Duration(days: 7));
+    if (showHostingOnly) {
+      filtered = filtered.where((event) {
+        return event.host == userName;
+      }).toList();
+    }
 
-    return events.where((event) {
-      return event.eventDate.isAfter(now) &&
-          event.eventDate.isBefore(oneWeekLater);
-    }).toList();
+    return filtered;
   }
 
   @override
@@ -237,6 +245,40 @@ class _EventListContentState extends State<EventListContent> {
                             fontSize: 15,
                             fontWeight: FontWeight.w600,
                             color: showUpcomingOnly
+                                ? CupertinoColors.activeBlue
+                                : CupertinoColors.systemGrey,
+                          ),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(width: 8),
+                    GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          showHostingOnly = !showHostingOnly;
+                        });
+                      },
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 16,
+                          vertical: 10,
+                        ),
+                        decoration: BoxDecoration(
+                          color: CupertinoColors.white,
+                          border: Border.all(
+                            color: showHostingOnly
+                                ? CupertinoColors.activeBlue
+                                : CupertinoColors.systemGrey4,
+                            width: 2,
+                          ),
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        child: Text(
+                          'Hosting',
+                          style: TextStyle(
+                            fontSize: 15,
+                            fontWeight: FontWeight.w600,
+                            color: showHostingOnly
                                 ? CupertinoColors.activeBlue
                                 : CupertinoColors.systemGrey,
                           ),
