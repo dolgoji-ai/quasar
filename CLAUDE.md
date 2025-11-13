@@ -24,6 +24,14 @@ Quasar is a mobile application built with Flutter, targeting iOS and Android pla
 ### Standards Reference
 - Follow Flutter project structure standards from: https://changjoo-park.github.io/learn-flutter/part1/project-structure/#%EA%B3%84%EC%B8%B5%EB%B3%84-%EA%B5%AC%EC%A1%B0-layer-first
 
+## UI/UX Guidelines
+
+### Pull-to-Refresh
+- All list pages should implement pull-to-refresh functionality
+- Use `CupertinoSliverRefreshControl` for iOS-style refresh indicator
+- Wrap the main scrollable widget with `CustomScrollView` and use slivers
+- The refresh action should reload the data and update the UI
+
 ## Development Notes
 - App name: Quasar
 - Package: com.quasar.quasar
