@@ -4,15 +4,77 @@ import '../utils/color_utils.dart';
 import '../utils/date_utils.dart';
 import '../utils/event_status.dart';
 import 'event_detail_page.dart';
+import 'explore_page.dart';
+import 'create_page.dart';
+import 'gallery_page.dart';
+import 'profile_page.dart';
 
-class EventListPage extends StatefulWidget {
+class EventListPage extends StatelessWidget {
   const EventListPage({super.key});
 
   @override
-  State<EventListPage> createState() => _EventListPageState();
+  Widget build(BuildContext context) {
+    return CupertinoTabScaffold(
+      tabBar: CupertinoTabBar(
+        iconSize: 24,
+        items: const [
+          BottomNavigationBarItem(
+            icon: Icon(CupertinoIcons.house),
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(CupertinoIcons.globe),
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(CupertinoIcons.add_circled),
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(CupertinoIcons.photo_on_rectangle),
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(CupertinoIcons.person_circle),
+          ),
+        ],
+      ),
+      tabBuilder: (context, index) {
+        switch (index) {
+          case 0:
+            return CupertinoTabView(
+              builder: (context) => const EventListContent(),
+            );
+          case 1:
+            return CupertinoTabView(
+              builder: (context) => const ExplorePage(),
+            );
+          case 2:
+            return CupertinoTabView(
+              builder: (context) => const CreatePage(),
+            );
+          case 3:
+            return CupertinoTabView(
+              builder: (context) => const GalleryPage(),
+            );
+          case 4:
+            return CupertinoTabView(
+              builder: (context) => const ProfilePage(),
+            );
+          default:
+            return CupertinoTabView(
+              builder: (context) => const EventListContent(),
+            );
+        }
+      },
+    );
+  }
 }
 
-class _EventListPageState extends State<EventListPage> {
+class EventListContent extends StatefulWidget {
+  const EventListContent({super.key});
+
+  @override
+  State<EventListContent> createState() => _EventListContentState();
+}
+
+class _EventListContentState extends State<EventListContent> {
   List<Event> events = [];
 
   @override
