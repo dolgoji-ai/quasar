@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 
-import '../constants/constants.dart';
 import '../models/event.dart';
+import '../services/auth_service.dart';
 import '../utils/color_utils.dart';
 import '../utils/date_utils.dart';
 import '../utils/event_status.dart';
@@ -85,7 +85,7 @@ class _EventListContentState extends State<EventListContent> {
         id: '9',
         status: EventStatus.scheduled,
         title: '팀 빌딩 워크샵',
-        host: 'dogoji-ai',
+        host: 'dolgoji-ai',
         imageUrl: 'https://picsum.photos/200/200?random=2',
         eventDate: DateTime(2025, 11, 19, 18, 0),
       ),
@@ -117,7 +117,7 @@ class _EventListContentState extends State<EventListContent> {
         id: '5',
         status: EventStatus.completed,
         title: '프로젝트 킥오프 미팅',
-        host: 'dogoji-ai',
+        host: 'dolgoji-ai',
         imageUrl: 'https://picsum.photos/200/200?random=4',
         eventDate: DateTime(2025, 3, 10, 10, 0),
       ),
@@ -141,7 +141,7 @@ class _EventListContentState extends State<EventListContent> {
         id: '2',
         status: EventStatus.completed,
         title: '월간 회고 모임',
-        host: 'dogoji-ai',
+        host: 'dolgoji-ai',
         imageUrl: 'https://picsum.photos/200/200?random=6',
         eventDate: DateTime(2024, 11, 30, 15, 30),
       ),
@@ -184,7 +184,7 @@ class _EventListContentState extends State<EventListContent> {
 
     if (showHostingOnly) {
       filtered = filtered.where((event) {
-        return event.host == userName;
+        return event.host == AuthService().userName;
       }).toList();
     }
 
@@ -203,7 +203,7 @@ class _EventListContentState extends State<EventListContent> {
               child: Padding(
                 padding: const EdgeInsets.fromLTRB(16, 16, 16, 12),
                 child: Text(
-                  '함께해서 반가워요, $userName님!',
+                  '함께해서 반가워요, ${AuthService().userName}님!',
                   style: TextStyle(
                     fontSize: 24,
                     fontWeight: FontWeight.bold,
