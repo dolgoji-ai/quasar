@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import '../models/event.dart';
 import '../utils/color_utils.dart';
+import '../utils/date_utils.dart';
 
 class EventDetailPage extends StatelessWidget {
   final Event event;
@@ -123,6 +124,34 @@ class EventDetailPage extends StatelessWidget {
                           const SizedBox(width: 16),
                           Text(
                             event.host,
+                            style: const TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.w600,
+                              color: CupertinoColors.label,
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 20),
+                      Row(
+                        children: [
+                          const Icon(
+                            CupertinoIcons.calendar,
+                            size: 20,
+                            color: CupertinoColors.systemGrey,
+                          ),
+                          const SizedBox(width: 8),
+                          const Text(
+                            '일자',
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w600,
+                              color: CupertinoColors.systemGrey,
+                            ),
+                          ),
+                          const SizedBox(width: 16),
+                          Text(
+                            formatEventDate(event.eventDate),
                             style: const TextStyle(
                               fontSize: 18,
                               fontWeight: FontWeight.w600,

@@ -6,6 +6,7 @@ class Event {
   final String title;
   final String host;
   final String imageUrl;
+  final DateTime eventDate;
 
   Event({
     required this.id,
@@ -13,5 +14,6 @@ class Event {
     required this.title,
     required this.host,
     required this.imageUrl,
+    required this.eventDate,
   });
 }

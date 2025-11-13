@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import '../models/event.dart';
 import '../utils/color_utils.dart';
+import '../utils/date_utils.dart';
 import '../utils/event_status.dart';
 import 'event_detail_page.dart';
 
@@ -28,6 +29,7 @@ class _EventListPageState extends State<EventListPage> {
         title: '2025 신년회',
         host: '김철수',
         imageUrl: 'https://picsum.photos/200/200?random=1',
+        eventDate: DateTime(2025, 1, 15, 18, 0),
       ),
       Event(
         id: '2',
@@ -35,6 +37,7 @@ class _EventListPageState extends State<EventListPage> {
         title: '팀 빌딩 워크샵',
         host: '박영희',
         imageUrl: 'https://picsum.photos/200/200?random=2',
+        eventDate: DateTime(2025, 8, 31, 18, 0),
       ),
       Event(
         id: '3',
@@ -42,6 +45,7 @@ class _EventListPageState extends State<EventListPage> {
         title: '분기별 회식',
         host: '이민호',
         imageUrl: 'https://picsum.photos/200/200?random=3',
+        eventDate: DateTime(2024, 12, 20, 19, 30),
       ),
       Event(
         id: '4',
@@ -49,6 +53,7 @@ class _EventListPageState extends State<EventListPage> {
         title: '프로젝트 킥오프 미팅',
         host: '정수진',
         imageUrl: 'https://picsum.photos/200/200?random=4',
+        eventDate: DateTime(2025, 2, 10, 10, 0),
       ),
       Event(
         id: '5',
@@ -56,6 +61,7 @@ class _EventListPageState extends State<EventListPage> {
         title: '여름 야유회',
         host: '최동욱',
         imageUrl: 'https://picsum.photos/200/200?random=5',
+        eventDate: DateTime(2025, 7, 25, 14, 0),
       ),
       Event(
         id: '6',
@@ -63,6 +69,7 @@ class _EventListPageState extends State<EventListPage> {
         title: '월간 회고 모임',
         host: '강민서',
         imageUrl: 'https://picsum.photos/200/200?random=6',
+        eventDate: DateTime(2024, 11, 30, 15, 30),
       ),
       Event(
         id: '7',
@@ -70,6 +77,7 @@ class _EventListPageState extends State<EventListPage> {
         title: '신입사원 환영회',
         host: '윤지훈',
         imageUrl: 'https://picsum.photos/200/200?random=7',
+        eventDate: DateTime(2025, 3, 5, 18, 30),
       ),
       Event(
         id: '8',
@@ -77,6 +85,7 @@ class _EventListPageState extends State<EventListPage> {
         title: '연말 송년회',
         host: '임하은',
         imageUrl: 'https://picsum.photos/200/200?random=8',
+        eventDate: DateTime(2025, 12, 28, 19, 0),
       ),
       Event(
         id: '9',
@@ -84,6 +93,7 @@ class _EventListPageState extends State<EventListPage> {
         title: '스터디 그룹 정기모임',
         host: '서준호',
         imageUrl: 'https://picsum.photos/200/200?random=9',
+        eventDate: DateTime(2024, 10, 15, 20, 0),
       ),
       Event(
         id: '10',
@@ -91,6 +101,7 @@ class _EventListPageState extends State<EventListPage> {
         title: '부서 워크샵',
         host: '한유진',
         imageUrl: 'https://picsum.photos/200/200?random=10',
+        eventDate: DateTime(2025, 4, 20, 9, 0),
       ),
     ];
   }
@@ -197,6 +208,24 @@ class _EventListPageState extends State<EventListPage> {
                               const SizedBox(width: 4),
                               Text(
                                 event.host,
+                                style: const TextStyle(
+                                  fontSize: 14,
+                                  color: CupertinoColors.systemGrey,
+                                ),
+                              ),
+                            ],
+                          ),
+                          const SizedBox(height: 6),
+                          Row(
+                            children: [
+                              const Icon(
+                                CupertinoIcons.calendar,
+                                size: 16,
+                                color: CupertinoColors.systemGrey,
+                              ),
+                              const SizedBox(width: 4),
+                              Text(
+                                formatEventDate(event.eventDate),
                                 style: const TextStyle(
                                   fontSize: 14,
                                   color: CupertinoColors.systemGrey,
