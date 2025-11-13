@@ -21,6 +21,9 @@ Quasar is a mobile application built with Flutter, targeting iOS and Android pla
 - `ios/` - iOS native platform code
 - `android/` - Android native platform code
 
+### Standards Reference
+- Follow Flutter project structure standards from: https://changjoo-park.github.io/learn-flutter/part1/project-structure/#%EA%B3%84%EC%B8%B5%EB%B3%84-%EA%B5%AC%EC%A1%B0-layer-first
+
 ## Development Notes
 - App name: Quasar
 - Package: com.quasar.quasar

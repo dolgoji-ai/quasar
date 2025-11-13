@@ -1,23 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import '../models/event.dart';
+import '../utils/color_utils.dart';
 
 class EventDetailPage extends StatelessWidget {
   final Event event;
 
   const EventDetailPage({super.key, required this.event});
-
-  Color _getStatusColor(String status) {
-    switch (status) {
-      case '진행중':
-        return CupertinoColors.systemGreen;
-      case '예정':
-        return CupertinoColors.systemBlue;
-      case '완료':
-        return CupertinoColors.systemGrey;
-      default:
-        return CupertinoColors.systemGrey;
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -101,11 +89,11 @@ class EventDetailPage extends StatelessWidget {
                               vertical: 8,
                             ),
                             decoration: BoxDecoration(
-                              color: _getStatusColor(event.status),
+                              color: getStatusColor(event.status),
                               borderRadius: BorderRadius.circular(8),
                             ),
                             child: Text(
-                              event.status,
+                              event.status.displayName,
                               style: const TextStyle(
                                 color: CupertinoColors.white,
                                 fontSize: 14,

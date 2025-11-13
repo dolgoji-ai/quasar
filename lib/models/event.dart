@@ -1,6 +1,8 @@
+import '../utils/event_status.dart';
+
 class Event {
   final String id;
-  final String status;
+  final EventStatus status;
   final String title;
   final String host;
   final String imageUrl;
