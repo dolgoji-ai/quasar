@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 
+import '../constants/constants.dart';
 import '../models/event.dart';
 import '../utils/color_utils.dart';
 import '../utils/date_utils.dart';
@@ -194,7 +195,7 @@ class _EventListContentState extends State<EventListContent> {
               child: Padding(
                 padding: const EdgeInsets.fromLTRB(16, 16, 16, 12),
                 child: Text(
-                  '함께해서 반가워요, dogoji-ai님!',
+                  '함께해서 반가워요, $userName님!',
                   style: TextStyle(
                     fontSize: 24,
                     fontWeight: FontWeight.bold,
