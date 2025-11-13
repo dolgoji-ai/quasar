@@ -76,6 +76,7 @@ class EventListContent extends StatefulWidget {
 
 class _EventListContentState extends State<EventListContent> {
   List<Event> events = [];
+  bool showUpcomingOnly = false;
 
   @override
   void initState() {
@@ -86,20 +87,60 @@ class _EventListContentState extends State<EventListContent> {
   void _loadEvents() {
     events = [
       Event(
-        id: '1',
-        status: EventStatus.inProgress,
-        title: '2025 신년회',
-        host: '김철수',
-        imageUrl: 'https://picsum.photos/200/200?random=1',
-        eventDate: DateTime(2025, 1, 15, 18, 0),
+        id: '10',
+        status: EventStatus.scheduled,
+        title: '연말 송년회',
+        host: '임하은',
+        imageUrl: 'https://picsum.photos/200/200?random=8',
+        eventDate: DateTime(2025, 12, 28, 19, 0),
       ),
       Event(
-        id: '2',
+        id: '9',
         status: EventStatus.scheduled,
         title: '팀 빌딩 워크샵',
         host: '박영희',
         imageUrl: 'https://picsum.photos/200/200?random=2',
-        eventDate: DateTime(2025, 8, 31, 18, 0),
+        eventDate: DateTime(2025, 11, 19, 18, 0),
+      ),
+      Event(
+        id: '8',
+        status: EventStatus.scheduled,
+        title: '여름 야유회',
+        host: '최동욱',
+        imageUrl: 'https://picsum.photos/200/200?random=5',
+        eventDate: DateTime(2025, 11, 16, 14, 0),
+      ),
+      Event(
+        id: '7',
+        status: EventStatus.completed,
+        title: '부서 워크샵',
+        host: '한유진',
+        imageUrl: 'https://picsum.photos/200/200?random=10',
+        eventDate: DateTime(2025, 6, 20, 9, 0),
+      ),
+      Event(
+        id: '6',
+        status: EventStatus.completed,
+        title: '신입사원 환영회',
+        host: '윤지훈',
+        imageUrl: 'https://picsum.photos/200/200?random=7',
+        eventDate: DateTime(2025, 5, 5, 18, 30),
+      ),
+      Event(
+        id: '5',
+        status: EventStatus.completed,
+        title: '프로젝트 킥오프 미팅',
+        host: '정수진',
+        imageUrl: 'https://picsum.photos/200/200?random=4',
+        eventDate: DateTime(2025, 3, 10, 10, 0),
+      ),
+      Event(
+        id: '4',
+        status: EventStatus.completed,
+        title: '2025 신년회',
+        host: '김철수',
+        imageUrl: 'https://picsum.photos/200/200?random=1',
+        eventDate: DateTime(2025, 1, 15, 18, 0),
       ),
       Event(
         id: '3',
@@ -110,23 +151,7 @@ class _EventListContentState extends State<EventListContent> {
         eventDate: DateTime(2024, 12, 20, 19, 30),
       ),
       Event(
-        id: '4',
-        status: EventStatus.inProgress,
-        title: '프로젝트 킥오프 미팅',
-        host: '정수진',
-        imageUrl: 'https://picsum.photos/200/200?random=4',
-        eventDate: DateTime(2025, 2, 10, 10, 0),
-      ),
-      Event(
-        id: '5',
-        status: EventStatus.scheduled,
-        title: '여름 야유회',
-        host: '최동욱',
-        imageUrl: 'https://picsum.photos/200/200?random=5',
-        eventDate: DateTime(2025, 7, 25, 14, 0),
-      ),
-      Event(
-        id: '6',
+        id: '2',
         status: EventStatus.completed,
         title: '월간 회고 모임',
         host: '강민서',
@@ -134,36 +159,12 @@ class _EventListContentState extends State<EventListContent> {
         eventDate: DateTime(2024, 11, 30, 15, 30),
       ),
       Event(
-        id: '7',
-        status: EventStatus.inProgress,
-        title: '신입사원 환영회',
-        host: '윤지훈',
-        imageUrl: 'https://picsum.photos/200/200?random=7',
-        eventDate: DateTime(2025, 3, 5, 18, 30),
-      ),
-      Event(
-        id: '8',
-        status: EventStatus.scheduled,
-        title: '연말 송년회',
-        host: '임하은',
-        imageUrl: 'https://picsum.photos/200/200?random=8',
-        eventDate: DateTime(2025, 12, 28, 19, 0),
-      ),
-      Event(
-        id: '9',
+        id: '1',
         status: EventStatus.completed,
         title: '스터디 그룹 정기모임',
         host: '서준호',
         imageUrl: 'https://picsum.photos/200/200?random=9',
         eventDate: DateTime(2024, 10, 15, 20, 0),
-      ),
-      Event(
-        id: '10',
-        status: EventStatus.inProgress,
-        title: '부서 워크샵',
-        host: '한유진',
-        imageUrl: 'https://picsum.photos/200/200?random=10',
-        eventDate: DateTime(2025, 4, 20, 9, 0),
       ),
     ];
   }
@@ -184,11 +185,25 @@ class _EventListContentState extends State<EventListContent> {
     });
   }
 
+  List<Event> get filteredEvents {
+    if (!showUpcomingOnly) {
+      return events;
+    }
+
+    final now = DateTime.now();
+    final oneWeekLater = now.add(const Duration(days: 7));
+
+    return events.where((event) {
+      return event.eventDate.isAfter(now) &&
+             event.eventDate.isBefore(oneWeekLater);
+    }).toList();
+  }
+
   @override
   Widget build(BuildContext context) {
     return CupertinoPageScaffold(
       navigationBar: const CupertinoNavigationBar(
-        middle: Text('Quasar'),
+        middle: Text('이벤트 목록'),
       ),
       child: SafeArea(
         child: CustomScrollView(
@@ -196,12 +211,55 @@ class _EventListContentState extends State<EventListContent> {
             CupertinoSliverRefreshControl(
               onRefresh: _handleRefresh,
             ),
+            SliverToBoxAdapter(
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(16, 16, 16, 4),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          showUpcomingOnly = !showUpcomingOnly;
+                        });
+                      },
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 16,
+                          vertical: 10,
+                        ),
+                        decoration: BoxDecoration(
+                          color: CupertinoColors.white,
+                          border: Border.all(
+                            color: showUpcomingOnly
+                                ? CupertinoColors.activeBlue
+                                : CupertinoColors.systemGrey4,
+                            width: 2,
+                          ),
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        child: Text(
+                          'Upcoming',
+                          style: TextStyle(
+                            fontSize: 15,
+                            fontWeight: FontWeight.w600,
+                            color: showUpcomingOnly
+                                ? CupertinoColors.activeBlue
+                                : CupertinoColors.systemGrey,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
             SliverPadding(
               padding: const EdgeInsets.all(16),
               sliver: SliverList(
                 delegate: SliverChildBuilderDelegate(
                   (context, index) {
-                    final event = events[index];
+                    final event = filteredEvents[index];
                     return GestureDetector(
                       onTap: () => _navigateToDetail(event),
                       child: Container(
@@ -316,7 +374,7 @@ class _EventListContentState extends State<EventListContent> {
                       ),
                     );
                   },
-                  childCount: events.length,
+                  childCount: filteredEvents.length,
                 ),
               ),
             ),
