@@ -11,14 +11,45 @@ import 'explore_page.dart';
 import 'gallery_page.dart';
 import 'profile_page.dart';
 
-class EventListPage extends StatelessWidget {
+class EventListPage extends StatefulWidget {
   const EventListPage({super.key});
+
+  @override
+  State<EventListPage> createState() => _EventListPageState();
+}
+
+class _EventListPageState extends State<EventListPage> {
+  final CupertinoTabController _tabController = CupertinoTabController();
+  int _previousTabIndex = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    _tabController.addListener(_onTabChanged);
+  }
+
+  void _onTabChanged() {
+    if (_tabController.index != 2) {
+      setState(() {
+        _previousTabIndex = _tabController.index;
+      });
+    }
+  }
+
+  @override
+  void dispose() {
+    _tabController.removeListener(_onTabChanged);
+    _tabController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     return CupertinoTabScaffold(
+      controller: _tabController,
       tabBar: CupertinoTabBar(
         iconSize: 24,
+        height: _tabController.index == 2 ? 0 : 50,
         items: const [
           BottomNavigationBarItem(icon: Icon(CupertinoIcons.house)),
           BottomNavigationBarItem(icon: Icon(CupertinoIcons.globe)),
@@ -38,7 +69,13 @@ class EventListPage extends StatelessWidget {
           case 1:
             return CupertinoTabView(builder: (context) => const ExplorePage());
           case 2:
-            return CupertinoTabView(builder: (context) => const CreatePage());
+            return CupertinoTabView(
+              builder: (context) => CreatePage(
+                onCancel: () {
+                  _tabController.index = _previousTabIndex;
+                },
+              ),
+            );
           case 3:
             return CupertinoTabView(builder: (context) => const GalleryPage());
           case 4:
