@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:go_router/go_router.dart';
 import '../models/event.dart';
 import '../utils/color_utils.dart';
 import '../utils/date_utils.dart';
@@ -24,7 +25,7 @@ class _EventDetailPageState extends State<EventDetailPage> {
       navigationBar: CupertinoNavigationBar(
         middle: const Text('이벤트 상세'),
         leading: CupertinoNavigationBarBackButton(
-          onPressed: () => Navigator.pop(context),
+          onPressed: () => context.pop(),
         ),
       ),
       child: SafeArea(
@@ -79,7 +80,7 @@ class _EventDetailPageState extends State<EventDetailPage> {
                         borderRadius: BorderRadius.circular(16),
                         boxShadow: [
                           BoxShadow(
-                            color: CupertinoColors.systemGrey.withOpacity(0.2),
+                            color: CupertinoColors.systemGrey.withValues(alpha: 0.2),
                             blurRadius: 12,
                             offset: const Offset(0, 4),
                           ),

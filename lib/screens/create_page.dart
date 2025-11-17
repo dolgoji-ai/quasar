@@ -1,9 +1,8 @@
 import 'package:flutter/cupertino.dart';
+import 'package:go_router/go_router.dart';
 
 class CreatePage extends StatefulWidget {
-  final VoidCallback? onCancel;
-
-  const CreatePage({super.key, this.onCancel});
+  const CreatePage({super.key});
 
   @override
   State<CreatePage> createState() => _CreatePageState();
@@ -125,7 +124,7 @@ class _CreatePageState extends State<CreatePage> {
                     ),
                     CupertinoButton(
                       padding: EdgeInsets.zero,
-                      onPressed: () => Navigator.pop(context),
+                      onPressed: () => context.pop(),
                       child: const Text('완료'),
                     ),
                   ],
@@ -147,7 +146,7 @@ class _CreatePageState extends State<CreatePage> {
                         setState(() {
                           _selectedImageIndex = index;
                         });
-                        Navigator.pop(context);
+                        context.pop();
                       },
                       child: Container(
                         decoration: BoxDecoration(
@@ -209,15 +208,13 @@ class _CreatePageState extends State<CreatePage> {
 
   void _handleCancel() {
     _resetForm();
-    widget.onCancel?.call();
+    context.pop();
   }
 
   @override
   Widget build(BuildContext context) {
     return CupertinoPageScaffold(
-      navigationBar: const CupertinoNavigationBar(
-        middle: Text('이벤트 등록'),
-      ),
+      navigationBar: const CupertinoNavigationBar(middle: Text('이벤트 등록')),
       child: SafeArea(
         child: Column(
           children: [
@@ -227,168 +224,168 @@ class _CreatePageState extends State<CreatePage> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-              GestureDetector(
-                onTap: _showImagePicker,
-                child: Container(
-                  width: double.infinity,
-                  height: 300,
-                  decoration: BoxDecoration(
-                    color: CupertinoColors.systemGrey6,
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  child: _selectedImageIndex == null
-                      ? Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: const [
-                            Icon(
-                              CupertinoIcons.photo_on_rectangle,
-                              size: 64,
-                              color: CupertinoColors.systemGrey,
-                            ),
-                            SizedBox(height: 12),
+                    GestureDetector(
+                      onTap: _showImagePicker,
+                      child: Container(
+                        width: double.infinity,
+                        height: 300,
+                        decoration: BoxDecoration(
+                          color: CupertinoColors.systemGrey6,
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        child: _selectedImageIndex == null
+                            ? Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: const [
+                                  Icon(
+                                    CupertinoIcons.photo_on_rectangle,
+                                    size: 64,
+                                    color: CupertinoColors.systemGrey,
+                                  ),
+                                  SizedBox(height: 12),
+                                  Text(
+                                    '이미지를 선택하세요',
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                      color: CupertinoColors.systemGrey,
+                                    ),
+                                  ),
+                                ],
+                              )
+                            : ClipRRect(
+                                borderRadius: BorderRadius.circular(12),
+                                child: Image.network(
+                                  _availableImages[_selectedImageIndex!],
+                                  fit: BoxFit.cover,
+                                  errorBuilder: (context, error, stackTrace) {
+                                    return Container(
+                                      color: CupertinoColors.systemGrey5,
+                                      child: const Icon(
+                                        CupertinoIcons.photo,
+                                        size: 64,
+                                        color: CupertinoColors.systemGrey,
+                                      ),
+                                    );
+                                  },
+                                ),
+                              ),
+                      ),
+                    ),
+                    const SizedBox(height: 24),
+                    const Text(
+                      '제목',
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
+                        color: CupertinoColors.label,
+                      ),
+                    ),
+                    const SizedBox(height: 8),
+                    CupertinoTextField(
+                      controller: _titleController,
+                      placeholder: '제목을 입력하세요',
+                      padding: const EdgeInsets.all(16),
+                      autofocus: false,
+                      decoration: BoxDecoration(
+                        color: CupertinoColors.systemGrey6,
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                    ),
+                    const SizedBox(height: 20),
+                    const Text(
+                      '설명',
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
+                        color: CupertinoColors.label,
+                      ),
+                    ),
+                    const SizedBox(height: 8),
+                    CupertinoTextField(
+                      controller: _descriptionController,
+                      placeholder: '설명을 입력하세요',
+                      maxLines: 4,
+                      padding: const EdgeInsets.all(16),
+                      autofocus: false,
+                      decoration: BoxDecoration(
+                        color: CupertinoColors.systemGrey6,
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                    ),
+                    const SizedBox(height: 20),
+                    const Text(
+                      '날짜',
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
+                        color: CupertinoColors.label,
+                      ),
+                    ),
+                    const SizedBox(height: 8),
+                    GestureDetector(
+                      onTap: _showDatePicker,
+                      child: Container(
+                        padding: const EdgeInsets.all(16),
+                        decoration: BoxDecoration(
+                          color: CupertinoColors.systemGrey6,
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
                             Text(
-                              '이미지를 선택하세요',
-                              style: TextStyle(
+                              _formatDate(_selectedDate),
+                              style: const TextStyle(
                                 fontSize: 16,
-                                color: CupertinoColors.systemGrey,
+                                color: CupertinoColors.label,
                               ),
                             ),
+                            const Icon(
+                              CupertinoIcons.calendar,
+                              color: CupertinoColors.systemGrey,
+                              size: 20,
+                            ),
                           ],
-                        )
-                      : ClipRRect(
-                          borderRadius: BorderRadius.circular(12),
-                          child: Image.network(
-                            _availableImages[_selectedImageIndex!],
-                            fit: BoxFit.cover,
-                            errorBuilder: (context, error, stackTrace) {
-                              return Container(
-                                color: CupertinoColors.systemGrey5,
-                                child: const Icon(
-                                  CupertinoIcons.photo,
-                                  size: 64,
-                                  color: CupertinoColors.systemGrey,
-                                ),
-                              );
-                            },
-                          ),
-                        ),
-                ),
-              ),
-              const SizedBox(height: 24),
-              const Text(
-                '제목',
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w600,
-                  color: CupertinoColors.label,
-                ),
-              ),
-              const SizedBox(height: 8),
-              CupertinoTextField(
-                controller: _titleController,
-                placeholder: '제목을 입력하세요',
-                padding: const EdgeInsets.all(16),
-                autofocus: false,
-                decoration: BoxDecoration(
-                  color: CupertinoColors.systemGrey6,
-                  borderRadius: BorderRadius.circular(8),
-                ),
-              ),
-              const SizedBox(height: 20),
-              const Text(
-                '설명',
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w600,
-                  color: CupertinoColors.label,
-                ),
-              ),
-              const SizedBox(height: 8),
-              CupertinoTextField(
-                controller: _descriptionController,
-                placeholder: '설명을 입력하세요',
-                maxLines: 4,
-                padding: const EdgeInsets.all(16),
-                autofocus: false,
-                decoration: BoxDecoration(
-                  color: CupertinoColors.systemGrey6,
-                  borderRadius: BorderRadius.circular(8),
-                ),
-              ),
-              const SizedBox(height: 20),
-              const Text(
-                '날짜',
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w600,
-                  color: CupertinoColors.label,
-                ),
-              ),
-              const SizedBox(height: 8),
-              GestureDetector(
-                onTap: _showDatePicker,
-                child: Container(
-                  padding: const EdgeInsets.all(16),
-                  decoration: BoxDecoration(
-                    color: CupertinoColors.systemGrey6,
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        _formatDate(_selectedDate),
-                        style: const TextStyle(
-                          fontSize: 16,
-                          color: CupertinoColors.label,
                         ),
                       ),
-                      const Icon(
-                        CupertinoIcons.calendar,
-                        color: CupertinoColors.systemGrey,
-                        size: 20,
+                    ),
+                    const SizedBox(height: 20),
+                    const Text(
+                      '시간',
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
+                        color: CupertinoColors.label,
                       ),
-                    ],
-                  ),
-                ),
-              ),
-              const SizedBox(height: 20),
-              const Text(
-                '시간',
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w600,
-                  color: CupertinoColors.label,
-                ),
-              ),
-              const SizedBox(height: 8),
-              GestureDetector(
-                onTap: _showTimePicker,
-                child: Container(
-                  padding: const EdgeInsets.all(16),
-                  decoration: BoxDecoration(
-                    color: CupertinoColors.systemGrey6,
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        _formatTime(_selectedTime),
-                        style: const TextStyle(
-                          fontSize: 16,
-                          color: CupertinoColors.label,
+                    ),
+                    const SizedBox(height: 8),
+                    GestureDetector(
+                      onTap: _showTimePicker,
+                      child: Container(
+                        padding: const EdgeInsets.all(16),
+                        decoration: BoxDecoration(
+                          color: CupertinoColors.systemGrey6,
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              _formatTime(_selectedTime),
+                              style: const TextStyle(
+                                fontSize: 16,
+                                color: CupertinoColors.label,
+                              ),
+                            ),
+                            const Icon(
+                              CupertinoIcons.clock,
+                              color: CupertinoColors.systemGrey,
+                              size: 20,
+                            ),
+                          ],
                         ),
                       ),
-                      const Icon(
-                        CupertinoIcons.clock,
-                        color: CupertinoColors.systemGrey,
-                        size: 20,
-                      ),
-                    ],
-                  ),
-                ),
-              ),
+                    ),
                   ],
                 ),
               ),
@@ -398,10 +395,7 @@ class _CreatePageState extends State<CreatePage> {
               decoration: BoxDecoration(
                 color: CupertinoColors.systemBackground,
                 border: Border(
-                  top: BorderSide(
-                    color: CupertinoColors.separator,
-                    width: 0.5,
-                  ),
+                  top: BorderSide(color: CupertinoColors.separator, width: 0.5),
                 ),
               ),
               child: Row(
@@ -419,8 +413,7 @@ class _CreatePageState extends State<CreatePage> {
                   const SizedBox(width: 12),
                   Expanded(
                     child: CupertinoButton.filled(
-                      onPressed: () {
-                      },
+                      onPressed: () {},
                       child: const Text('등록'),
                     ),
                   ),

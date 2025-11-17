@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
-import 'screens/event_list_page.dart';
-import 'screens/login_page.dart';
 import 'services/auth_service.dart';
+import 'router/app_router.dart';
 
 void main() {
   runApp(const MyApp());
@@ -16,11 +15,13 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   final AuthService _authService = AuthService();
+  late final AppRouter _appRouter;
   bool _isInitialized = false;
 
   @override
   void initState() {
     super.initState();
+    _appRouter = AppRouter(_authService);
     _initializeAuth();
   }
 
@@ -33,21 +34,19 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    return CupertinoApp(
+    if (!_isInitialized) {
+      return const CupertinoApp(
+        home: Center(child: CupertinoActivityIndicator()),
+      );
+    }
+
+    return CupertinoApp.router(
       title: 'Quasar',
       theme: const CupertinoThemeData(
         brightness: Brightness.light,
         primaryColor: CupertinoColors.systemBlue,
       ),
-      home: !_isInitialized
-          ? const Center(child: CupertinoActivityIndicator())
-          : _authService.isSignedIn
-              ? const EventListPage()
-              : LoginPage(authService: _authService),
-      routes: {
-        '/home': (context) => const EventListPage(),
-        '/login': (context) => LoginPage(authService: _authService),
-      },
+      routerConfig: _appRouter.router,
     );
   }
 }

@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:go_router/go_router.dart';
 import '../services/auth_service.dart';
-import 'event_list_page.dart';
 
 class LoginPage extends StatefulWidget {
   final AuthService authService;
@@ -28,12 +28,8 @@ class _LoginPageState extends State<LoginPage> {
       _isLoading = false;
     });
 
-    if (account != null) {
-      Navigator.of(context).pushReplacement(
-        CupertinoPageRoute(
-          builder: (context) => const EventListPage(),
-        ),
-      );
+    if (account != null && mounted) {
+      context.go('/home');
     }
   }
 

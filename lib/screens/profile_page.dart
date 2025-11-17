@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
+import 'package:go_router/go_router.dart';
+
 import '../services/auth_service.dart';
-import 'login_page.dart';
 
 class ProfilePage extends StatelessWidget {
   const ProfilePage({super.key});
@@ -16,12 +17,12 @@ class ProfilePage extends StatelessWidget {
         actions: [
           CupertinoDialogAction(
             child: const Text('취소'),
-            onPressed: () => Navigator.of(context).pop(false),
+            onPressed: () => context.pop(false),
           ),
           CupertinoDialogAction(
             isDestructiveAction: true,
             child: const Text('로그아웃'),
-            onPressed: () => Navigator.of(context).pop(true),
+            onPressed: () => context.pop(true),
           ),
         ],
       ),
@@ -31,12 +32,7 @@ class ProfilePage extends StatelessWidget {
       await authService.signOut();
 
       if (context.mounted) {
-        Navigator.of(context, rootNavigator: true).pushAndRemoveUntil(
-          CupertinoPageRoute(
-            builder: (context) => LoginPage(authService: authService),
-          ),
-          (route) => false,
-        );
+        context.go('/login');
       }
     }
   }
@@ -46,9 +42,7 @@ class ProfilePage extends StatelessWidget {
     final authService = AuthService();
 
     return CupertinoPageScaffold(
-      navigationBar: const CupertinoNavigationBar(
-        middle: Text('프로필'),
-      ),
+      navigationBar: const CupertinoNavigationBar(middle: Text('프로필')),
       child: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(16),
