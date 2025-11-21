@@ -137,7 +137,7 @@ class _ContactsPageState extends State<ContactsPage> {
                           leading: CircleAvatar(
                             backgroundColor: Theme.of(
                               context,
-                            ).primaryColor.withOpacity(0.1),
+                            ).primaryColor.withValues(alpha: 0.1),
                             child: Text(
                               displayName.isNotEmpty
                                   ? displayName[0].toUpperCase()
