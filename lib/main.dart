@@ -1,9 +1,20 @@
 import 'package:flutter/material.dart';
-import 'services/auth_service.dart';
-import 'router/app_router.dart';
+import 'package:permission_handler/permission_handler.dart';
 
-void main() {
+import 'router/app_router.dart';
+import 'services/auth_service.dart';
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await _requestContactsPermission();
   runApp(const MyApp());
+}
+
+Future<void> _requestContactsPermission() async {
+  final status = await Permission.contacts.status;
+  if (!status.isGranted) {
+    await Permission.contacts.request();
+  }
 }
 
 class MyApp extends StatefulWidget {
