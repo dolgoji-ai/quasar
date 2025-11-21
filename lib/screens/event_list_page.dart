@@ -162,7 +162,7 @@ class _EventListContentState extends State<EventListContent> {
   }
 
   void _navigateToDetail(Event event) {
-    context.go('/home/event/${event.id}', extra: event);
+    context.go('/events/${event.id}', extra: event);
   }
 
   Future<void> _handleRefresh() async {
@@ -219,7 +219,7 @@ class _EventListContentState extends State<EventListContent> {
                   child: Row(
                     children: [
                       FilterChip(
-                        onSelected: (_) => context.push('/home/event-create'),
+                        onSelected: (_) => context.go('/events/create'),
                         label: const Icon(Icons.add, size: 16),
                         selected: false,
                         showCheckmark: false,

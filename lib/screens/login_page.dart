@@ -30,7 +30,7 @@ class _LoginPageState extends State<LoginPage> {
     });
 
     if (account != null && mounted) {
-      context.go('/home');
+      context.go('/events');
     }
   }
 
