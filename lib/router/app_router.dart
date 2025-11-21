@@ -11,7 +11,7 @@ import '../screens/gallery_page.dart';
 import '../screens/login_page.dart';
 import '../screens/profile_page.dart';
 import '../services/auth_service.dart';
-import 'scaffold_with_nav_bar.dart';
+import '../widgets/scaffold_with_nav_bar.dart';
 
 final GlobalKey<NavigatorState> _rootNavigatorKey = GlobalKey<NavigatorState>();
 
