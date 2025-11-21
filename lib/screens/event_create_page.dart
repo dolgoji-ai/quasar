@@ -165,190 +165,170 @@ class _EventCreatePageState extends State<EventCreatePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('이벤트 등록')),
+      appBar: AppBar(
+        title: const Text('이벤트 등록'),
+        actions: [
+          TextButton(
+            onPressed: () {},
+            child: const Text('저장', style: TextStyle(fontSize: 20)),
+          ),
+        ],
+      ),
       body: SafeArea(
-        child: Column(
-          children: [
-            Expanded(
-              child: SingleChildScrollView(
-                padding: const EdgeInsets.all(16),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    InkWell(
-                      onTap: _showImagePicker,
-                      child: Container(
-                        width: double.infinity,
-                        height: 300,
-                        decoration: BoxDecoration(
-                          color: Colors.grey[200],
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                        child: _selectedImageIndex == null
-                            ? Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Icon(
-                                    Icons.photo_library,
-                                    size: 64,
-                                    color: Colors.grey[600],
-                                  ),
-                                  const SizedBox(height: 12),
-                                  Text(
-                                    '이미지를 선택하세요',
-                                    style: TextStyle(
-                                      fontSize: 16,
-                                      color: Colors.grey[600],
-                                    ),
-                                  ),
-                                ],
-                              )
-                            : ClipRRect(
-                                borderRadius: BorderRadius.circular(12),
-                                child: Image.network(
-                                  _availableImages[_selectedImageIndex!],
-                                  fit: BoxFit.cover,
-                                  errorBuilder: (context, error, stackTrace) {
-                                    return Container(
-                                      color: Colors.grey[300],
-                                      child: Icon(
-                                        Icons.photo,
-                                        size: 64,
-                                        color: Colors.grey[600],
-                                      ),
-                                    );
-                                  },
-                                ),
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              InkWell(
+                onTap: _showImagePicker,
+                child: Container(
+                  width: double.infinity,
+                  height: 300,
+                  decoration: BoxDecoration(
+                    color: Theme.of(context).scaffoldBackgroundColor,
+                    borderRadius: BorderRadius.circular(12),
+                    border: Border.all(color: Colors.grey[300]!, width: 1),
+                  ),
+                  child: _selectedImageIndex == null
+                      ? Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(
+                              Icons.photo_library,
+                              size: 64,
+                              color: Colors.grey[600],
+                            ),
+                            const SizedBox(height: 12),
+                            Text(
+                              '이미지를 선택하세요',
+                              style: TextStyle(
+                                fontSize: 16,
+                                color: Colors.grey[600],
                               ),
-                      ),
-                    ),
-                    const SizedBox(height: 24),
-                    Text(
-                      '제목',
-                      style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                    const SizedBox(height: 8),
-                    TextField(
-                      controller: _titleController,
-                      decoration: const InputDecoration(
-                        hintText: '제목을 입력하세요',
-                        border: OutlineInputBorder(),
-                        filled: true,
-                      ),
-                    ),
-                    const SizedBox(height: 20),
-                    Text(
-                      '설명',
-                      style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                    const SizedBox(height: 8),
-                    TextField(
-                      controller: _descriptionController,
-                      decoration: const InputDecoration(
-                        hintText: '설명을 입력하세요',
-                        border: OutlineInputBorder(),
-                        filled: true,
-                      ),
-                      maxLines: 4,
-                    ),
-                    const SizedBox(height: 20),
-                    Text(
-                      '날짜',
-                      style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                    const SizedBox(height: 8),
-                    InkWell(
-                      onTap: _showDatePicker,
-                      child: InputDecorator(
-                        decoration: const InputDecoration(
-                          border: OutlineInputBorder(),
-                          filled: true,
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              _formatDate(_selectedDate),
-                              style: const TextStyle(fontSize: 16),
-                            ),
-                            Icon(
-                              Icons.calendar_today,
-                              color: Colors.grey[600],
-                              size: 20,
                             ),
                           ],
+                        )
+                      : ClipRRect(
+                          borderRadius: BorderRadius.circular(12),
+                          child: Image.network(
+                            _availableImages[_selectedImageIndex!],
+                            fit: BoxFit.cover,
+                            errorBuilder: (context, error, stackTrace) {
+                              return Container(
+                                color: Colors.grey[300],
+                                child: Icon(
+                                  Icons.photo,
+                                  size: 64,
+                                  color: Colors.grey[600],
+                                ),
+                              );
+                            },
+                          ),
                         ),
-                      ),
-                    ),
-                    const SizedBox(height: 20),
-                    Text(
-                      '시간',
-                      style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                    const SizedBox(height: 8),
-                    InkWell(
-                      onTap: _showTimePicker,
-                      child: InputDecorator(
-                        decoration: const InputDecoration(
-                          border: OutlineInputBorder(),
-                          filled: true,
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              _formatTime(_selectedTime),
-                              style: const TextStyle(fontSize: 16),
-                            ),
-                            Icon(
-                              Icons.access_time,
-                              color: Colors.grey[600],
-                              size: 20,
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ],
                 ),
               ),
-            ),
-            Container(
-              padding: const EdgeInsets.all(16),
-              decoration: BoxDecoration(
-                border: Border(
-                  top: BorderSide(color: Colors.grey[300]!, width: 1),
+              const SizedBox(height: 24),
+              Text(
+                '제목',
+                style: Theme.of(
+                  context,
+                ).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w600),
+              ),
+              const SizedBox(height: 8),
+              TextField(
+                controller: _titleController,
+                decoration: InputDecoration(
+                  hintText: '제목을 입력하세요',
+                  border: const OutlineInputBorder(),
+                  filled: true,
+                  fillColor: Theme.of(context).scaffoldBackgroundColor,
                 ),
               ),
-              child: SizedBox(
-                width: double.infinity,
-                child: ElevatedButton(
-                  onPressed: () {},
-                  style: ElevatedButton.styleFrom(
-                    padding: const EdgeInsets.symmetric(vertical: 14),
-                    backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-                    foregroundColor: Colors.black,
-                    side: BorderSide(color: Colors.grey[350]!, width: 1),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(40),
-                    ),
+              const SizedBox(height: 20),
+              Text(
+                '설명',
+                style: Theme.of(
+                  context,
+                ).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w600),
+              ),
+              const SizedBox(height: 8),
+              TextField(
+                controller: _descriptionController,
+                decoration: InputDecoration(
+                  hintText: '설명을 입력하세요',
+                  border: const OutlineInputBorder(),
+                  filled: true,
+                  fillColor: Theme.of(context).scaffoldBackgroundColor,
+                ),
+                maxLines: 4,
+              ),
+              const SizedBox(height: 20),
+              Text(
+                '날짜',
+                style: Theme.of(
+                  context,
+                ).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w600),
+              ),
+              const SizedBox(height: 8),
+              InkWell(
+                onTap: _showDatePicker,
+                child: InputDecorator(
+                  decoration: InputDecoration(
+                    border: const OutlineInputBorder(),
+                    filled: true,
+                    fillColor: Theme.of(context).scaffoldBackgroundColor,
                   ),
-                  child: const Text(
-                    '등록하기',
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        _formatDate(_selectedDate),
+                        style: const TextStyle(fontSize: 16),
+                      ),
+                      Icon(
+                        Icons.calendar_today,
+                        color: Colors.grey[600],
+                        size: 20,
+                      ),
+                    ],
                   ),
                 ),
               ),
-            ),
-          ],
+              const SizedBox(height: 20),
+              Text(
+                '시간',
+                style: Theme.of(
+                  context,
+                ).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w600),
+              ),
+              const SizedBox(height: 8),
+              InkWell(
+                onTap: _showTimePicker,
+                child: InputDecorator(
+                  decoration: InputDecoration(
+                    border: const OutlineInputBorder(),
+                    filled: true,
+                    fillColor: Theme.of(context).scaffoldBackgroundColor,
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        _formatTime(_selectedTime),
+                        style: const TextStyle(fontSize: 16),
+                      ),
+                      Icon(
+                        Icons.access_time,
+                        color: Colors.grey[600],
+                        size: 20,
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
