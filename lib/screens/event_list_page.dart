@@ -107,7 +107,7 @@ class _EventListContentState extends State<EventListContent> {
                 ),
               ),
               SliverPadding(
-                padding: const EdgeInsets.fromLTRB(16, 8, 16, 16),
+                padding: const EdgeInsets.fromLTRB(16, 8, 16, 4),
                 sliver: SliverList(
                   delegate: SliverChildBuilderDelegate((context, index) {
                     final event = events[index];
