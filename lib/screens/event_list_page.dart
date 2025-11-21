@@ -15,6 +15,7 @@ class EventListContent extends StatefulWidget {
 }
 
 class _EventListContentState extends State<EventListContent> {
+  final AuthService _authService = AuthService();
   List<Event> events = [];
   bool showUpcomingOnly = false;
   bool showHostingOnly = false;
@@ -185,7 +186,7 @@ class _EventListContentState extends State<EventListContent> {
 
     if (showHostingOnly) {
       filtered = filtered.where((event) {
-        return event.host == AuthService().userName;
+        return event.host == _authService.userName;
       }).toList();
     }
 
@@ -205,7 +206,7 @@ class _EventListContentState extends State<EventListContent> {
                 child: Padding(
                   padding: const EdgeInsets.fromLTRB(16, 16, 16, 12),
                   child: Text(
-                    '함께해서 반가워요, ${AuthService().userName}님!',
+                    '함께해서 반가워요, ${_authService.userName}님!',
                     style: Theme.of(context).textTheme.headlineSmall?.copyWith(
                       fontWeight: FontWeight.bold,
                     ),
@@ -221,6 +222,7 @@ class _EventListContentState extends State<EventListContent> {
                       FilterChip(
                         label: const Text('Upcoming'),
                         selected: showUpcomingOnly,
+                        showCheckmark: false,
                         onSelected: (selected) {
                           setState(() {
                             showUpcomingOnly = selected;
@@ -231,6 +233,7 @@ class _EventListContentState extends State<EventListContent> {
                       FilterChip(
                         label: const Text('Hosting'),
                         selected: showHostingOnly,
+                        showCheckmark: false,
                         onSelected: (selected) {
                           setState(() {
                             showHostingOnly = selected;
