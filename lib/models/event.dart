@@ -1,4 +1,4 @@
-import '../utils/event_status.dart';
+import '../enums/event_status.dart';
 
 class Member {
   final String name;

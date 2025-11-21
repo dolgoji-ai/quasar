@@ -1,5 +1,5 @@
+import '../enums/event_status.dart';
 import '../models/event.dart';
-import '../utils/event_status.dart';
 
 class EventRepository {
   static final EventRepository _instance = EventRepository._internal();

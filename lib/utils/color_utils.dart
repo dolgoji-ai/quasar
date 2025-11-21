@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'event_status.dart';
+
+import '../enums/event_status.dart';
 
 Color getStatusColor(EventStatus status) {
   switch (status) {
