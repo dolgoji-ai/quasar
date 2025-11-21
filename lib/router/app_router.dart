@@ -5,7 +5,6 @@ import '../screens/explore_page.dart';
 import '../screens/contacts_page.dart';
 import '../screens/gallery_page.dart';
 import '../screens/profile_page.dart';
-import '../screens/create_page.dart';
 import '../screens/event_detail_page.dart';
 import '../screens/event_create_page.dart';
 import '../screens/login_page.dart';
@@ -81,14 +80,6 @@ class AppRouter {
               GoRoute(
                 path: '/contacts',
                 builder: (context, state) => const ContactsPage(),
-              ),
-            ],
-          ),
-          StatefulShellBranch(
-            routes: [
-              GoRoute(
-                path: '/create',
-                builder: (context, state) => const CreatePage(),
               ),
             ],
           ),

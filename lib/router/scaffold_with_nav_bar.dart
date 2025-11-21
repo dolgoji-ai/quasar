@@ -57,7 +57,6 @@ class _ScaffoldWithNavBarState extends State<ScaffoldWithNavBar> {
   @override
   Widget build(BuildContext context) {
     final currentIndex = widget.navigationShell.currentIndex;
-    final shouldHideNavBar = currentIndex == 3;
 
     return PopScope(
       canPop: false,
@@ -67,49 +66,42 @@ class _ScaffoldWithNavBarState extends State<ScaffoldWithNavBar> {
       },
       child: Scaffold(
         body: widget.navigationShell,
-        bottomNavigationBar: shouldHideNavBar
-            ? null
-            : SizedBox(
-                height: 60,
-                child: NavigationBar(
-                  selectedIndex: currentIndex,
-                  onDestinationSelected: _onItemTapped,
-                  labelBehavior: NavigationDestinationLabelBehavior.alwaysHide,
-                  backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-                  destinations: [
-                    NavigationDestination(
-                      icon: Icon(Icons.home_outlined),
-                      selectedIcon: Icon(Icons.home),
-                      label: '',
-                    ),
-                    NavigationDestination(
-                      icon: Icon(Icons.explore_outlined),
-                      selectedIcon: Icon(Icons.explore),
-                      label: '',
-                    ),
-                    NavigationDestination(
-                      icon: Icon(Icons.contacts_outlined),
-                      selectedIcon: Icon(Icons.contacts),
-                      label: '',
-                    ),
-                    NavigationDestination(
-                      icon: Icon(Icons.add_circle_outline),
-                      selectedIcon: Icon(Icons.add_circle),
-                      label: '',
-                    ),
-                    NavigationDestination(
-                      icon: Icon(Icons.photo_library_outlined),
-                      selectedIcon: Icon(Icons.photo_library),
-                      label: '',
-                    ),
-                    NavigationDestination(
-                      icon: Icon(Icons.person_outline),
-                      selectedIcon: Icon(Icons.person),
-                      label: '',
-                    ),
-                  ],
-                ),
+        bottomNavigationBar: SizedBox(
+          height: 60,
+          child: NavigationBar(
+            selectedIndex: currentIndex,
+            onDestinationSelected: _onItemTapped,
+            labelBehavior: NavigationDestinationLabelBehavior.alwaysHide,
+            backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+            destinations: [
+              NavigationDestination(
+                icon: Icon(Icons.home_outlined),
+                selectedIcon: Icon(Icons.home),
+                label: '',
               ),
+              NavigationDestination(
+                icon: Icon(Icons.explore_outlined),
+                selectedIcon: Icon(Icons.explore),
+                label: '',
+              ),
+              NavigationDestination(
+                icon: Icon(Icons.contacts_outlined),
+                selectedIcon: Icon(Icons.contacts),
+                label: '',
+              ),
+              NavigationDestination(
+                icon: Icon(Icons.photo_library_outlined),
+                selectedIcon: Icon(Icons.photo_library),
+                label: '',
+              ),
+              NavigationDestination(
+                icon: Icon(Icons.person_outline),
+                selectedIcon: Icon(Icons.person),
+                label: '',
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }
