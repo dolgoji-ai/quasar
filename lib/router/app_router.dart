@@ -11,7 +11,7 @@ import '../screens/gallery_page.dart';
 import '../screens/login_page.dart';
 import '../screens/profile_page.dart';
 import '../services/auth_service.dart';
-import '../widgets/scaffold_with_nav_bar.dart';
+import '../widgets/app_bottom_nav_bar_widget.dart';
 
 final GlobalKey<NavigatorState> _rootNavigatorKey = GlobalKey<NavigatorState>();
 
@@ -44,7 +44,7 @@ class AppRouter {
       ),
       StatefulShellRoute.indexedStack(
         builder: (context, state, navigationShell) {
-          return ScaffoldWithNavBar(navigationShell: navigationShell);
+          return AppBottomNavBarWidget(navigationShell: navigationShell);
         },
         branches: [
           StatefulShellBranch(

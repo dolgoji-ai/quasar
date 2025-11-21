@@ -2,16 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
 
-class ScaffoldWithNavBar extends StatefulWidget {
+class AppBottomNavBarWidget extends StatefulWidget {
   final StatefulNavigationShell navigationShell;
 
-  const ScaffoldWithNavBar({super.key, required this.navigationShell});
+  const AppBottomNavBarWidget({super.key, required this.navigationShell});
 
   @override
-  State<ScaffoldWithNavBar> createState() => _ScaffoldWithNavBarState();
+  State<AppBottomNavBarWidget> createState() => _AppBottomNavBarWidgetState();
 }
 
-class _ScaffoldWithNavBarState extends State<ScaffoldWithNavBar> {
+class _AppBottomNavBarWidgetState extends State<AppBottomNavBarWidget> {
   DateTime? _lastBackPressTime;
   final List<int> _navigationHistory = [0];
 
