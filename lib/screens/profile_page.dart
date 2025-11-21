@@ -1,4 +1,4 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import '../services/auth_service.dart';
@@ -9,18 +9,17 @@ class ProfilePage extends StatelessWidget {
   Future<void> _handleLogout(BuildContext context) async {
     final authService = AuthService();
 
-    final confirmed = await showCupertinoDialog<bool>(
+    final confirmed = await showDialog<bool>(
       context: context,
-      builder: (context) => CupertinoAlertDialog(
+      builder: (context) => AlertDialog(
         title: const Text('로그아웃'),
         content: const Text('정말 로그아웃 하시겠습니까?'),
         actions: [
-          CupertinoDialogAction(
+          TextButton(
             child: const Text('취소'),
             onPressed: () => context.pop(false),
           ),
-          CupertinoDialogAction(
-            isDestructiveAction: true,
+          TextButton(
             child: const Text('로그아웃'),
             onPressed: () => context.pop(true),
           ),
@@ -41,42 +40,42 @@ class ProfilePage extends StatelessWidget {
   Widget build(BuildContext context) {
     final authService = AuthService();
 
-    return CupertinoPageScaffold(
-      navigationBar: const CupertinoNavigationBar(middle: Text('프로필')),
-      child: SafeArea(
+    return Scaffold(
+      appBar: AppBar(title: const Text('프로필')),
+      body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(16),
           child: Column(
             children: [
               const SizedBox(height: 40),
-              Icon(
-                CupertinoIcons.person_circle_fill,
-                size: 100,
-                color: CupertinoColors.systemGrey,
-              ),
+              Icon(Icons.account_circle, size: 100, color: Colors.grey[600]),
               const SizedBox(height: 24),
               Text(
                 authService.userName,
-                style: const TextStyle(
-                  fontSize: 28,
+                style: Theme.of(context).textTheme.headlineSmall?.copyWith(
                   fontWeight: FontWeight.bold,
-                  color: CupertinoColors.label,
                 ),
               ),
               const SizedBox(height: 8),
               Text(
                 authService.userEmail,
-                style: const TextStyle(
-                  fontSize: 16,
-                  color: CupertinoColors.systemGrey,
-                ),
+                style: TextStyle(fontSize: 16, color: Colors.grey[600]),
               ),
               const SizedBox(height: 40),
               const Spacer(),
               SizedBox(
                 width: double.infinity,
-                child: CupertinoButton.filled(
+                child: ElevatedButton(
                   onPressed: () => _handleLogout(context),
+                  style: ElevatedButton.styleFrom(
+                    elevation: 0,
+                    backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+                    foregroundColor: Colors.black,
+                    side: BorderSide(color: Colors.grey[300]!, width: 1),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                  ),
                   child: const Text('로그아웃'),
                 ),
               ),

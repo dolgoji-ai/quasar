@@ -1,13 +1,13 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'event_status.dart';
 
 Color getStatusColor(EventStatus status) {
   switch (status) {
     case EventStatus.inProgress:
-      return CupertinoColors.systemGreen;
+      return Colors.green;
     case EventStatus.scheduled:
-      return CupertinoColors.systemBlue;
+      return Colors.blue;
     case EventStatus.completed:
-      return CupertinoColors.systemGrey;
+      return Colors.grey;
   }
 }

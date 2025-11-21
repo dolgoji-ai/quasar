@@ -26,10 +26,13 @@ Quasar is a mobile application built with Flutter, targeting iOS and Android pla
 
 ## UI/UX Guidelines
 
+### Design System
+- Use Material Design 3 components and patterns
+- Follow Material Design guidelines for consistency across the app
+
 ### Pull-to-Refresh
 - All list pages should implement pull-to-refresh functionality
-- Use `CupertinoSliverRefreshControl` for iOS-style refresh indicator
-- Wrap the main scrollable widget with `CustomScrollView` and use slivers
+- Use `RefreshIndicator` widget wrapping scrollable content
 - The refresh action should reload the data and update the UI
 
 ## Development Notes

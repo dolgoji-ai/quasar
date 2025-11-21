@@ -1,4 +1,4 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 import '../services/auth_service.dart';
@@ -35,72 +35,65 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
-    return CupertinoPageScaffold(
-      child: SafeArea(
+    return Scaffold(
+      body: SafeArea(
         child: Center(
           child: Padding(
             padding: const EdgeInsets.all(32),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const Text(
+                Text(
                   'Quasar',
-                  style: TextStyle(
-                    fontSize: 48,
+                  style: Theme.of(context).textTheme.displayLarge?.copyWith(
                     fontWeight: FontWeight.bold,
-                    color: CupertinoColors.label,
                   ),
                 ),
                 const SizedBox(height: 16),
-                const Text(
+                Text(
                   '함께하는 이벤트 공간',
-                  style: TextStyle(
-                    fontSize: 18,
-                    color: CupertinoColors.systemGrey,
-                  ),
+                  style: TextStyle(fontSize: 18, color: Colors.grey[600]),
                 ),
                 const SizedBox(height: 80),
                 if (_isLoading)
-                  const CupertinoActivityIndicator(
-                    radius: 20,
-                  )
+                  const CircularProgressIndicator()
                 else
                   SizedBox(
                     width: double.infinity,
-                    child: GestureDetector(
-                      onTap: _handleSignIn,
-                      child: Container(
+                    child: OutlinedButton(
+                      onPressed: _handleSignIn,
+                      style: OutlinedButton.styleFrom(
                         padding: const EdgeInsets.symmetric(
                           horizontal: 24,
                           vertical: 12,
                         ),
-                        decoration: BoxDecoration(
-                          color: const Color(0xFFFFFFFF),
-                          border: Border.all(
-                            color: const Color(0xFF747775),
-                            width: 1,
-                          ),
+                        backgroundColor: Colors.white,
+                        side: const BorderSide(
+                          color: Color(0xFF747775),
+                          width: 1,
+                        ),
+                        shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(40),
                         ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            SvgPicture.asset(
-                              'assets/images/google_g_logo.svg',
-                              width: 36,
-                              height: 36,
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          SvgPicture.asset(
+                            'assets/images/google_g_logo.svg',
+                            width: 36,
+                            height: 36,
+                          ),
+                          const SizedBox(width: 12),
+                          const Text(
+                            'Google 계정으로 로그인',
+                            style: TextStyle(
+                              fontSize: 24,
+                              fontWeight: FontWeight.w500,
+                              color: Color(0xFF1F1F1F),
                             ),
-                            const SizedBox(width: 12),
-                            const Text(
-                              'Google 계정으로 로그인',
-                              style: TextStyle(
-                                fontSize: 24,
-                                fontWeight: FontWeight.w500,
-                                color: Color(0xFF1F1F1F),
-                              ),
-                            ),
-                          ],
-                        ),
+                          ),
+                        ],
                       ),
                     ),
                   ),

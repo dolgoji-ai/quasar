@@ -1,4 +1,4 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 class CreatePage extends StatefulWidget {
@@ -40,147 +40,113 @@ class _CreatePageState extends State<CreatePage> {
     super.dispose();
   }
 
-  void _showDatePicker() {
-    showCupertinoModalPopup<void>(
+  Future<void> _showDatePicker() async {
+    final DateTime? picked = await showDatePicker(
       context: context,
-      builder: (BuildContext context) => Container(
-        height: 216,
-        padding: const EdgeInsets.only(top: 6.0),
-        margin: EdgeInsets.only(
-          bottom: MediaQuery.of(context).viewInsets.bottom,
-        ),
-        color: CupertinoColors.systemBackground.resolveFrom(context),
-        child: SafeArea(
-          top: false,
-          child: CupertinoDatePicker(
-            mode: CupertinoDatePickerMode.date,
-            initialDateTime: _selectedDate,
-            onDateTimeChanged: (DateTime newDate) {
-              setState(() {
-                _selectedDate = newDate;
-              });
-            },
-          ),
-        ),
-      ),
+      initialDate: _selectedDate,
+      firstDate: DateTime(2020),
+      lastDate: DateTime(2030),
     );
+    if (picked != null) {
+      setState(() {
+        _selectedDate = picked;
+      });
+    }
   }
 
-  void _showTimePicker() {
-    showCupertinoModalPopup<void>(
+  Future<void> _showTimePicker() async {
+    final TimeOfDay? picked = await showTimePicker(
       context: context,
-      builder: (BuildContext context) => Container(
-        height: 216,
-        padding: const EdgeInsets.only(top: 6.0),
-        margin: EdgeInsets.only(
-          bottom: MediaQuery.of(context).viewInsets.bottom,
-        ),
-        color: CupertinoColors.systemBackground.resolveFrom(context),
-        child: SafeArea(
-          top: false,
-          child: CupertinoDatePicker(
-            mode: CupertinoDatePickerMode.time,
-            initialDateTime: _selectedTime,
-            onDateTimeChanged: (DateTime newTime) {
-              setState(() {
-                _selectedTime = newTime;
-              });
-            },
-          ),
-        ),
-      ),
+      initialTime: TimeOfDay.fromDateTime(_selectedTime),
     );
+    if (picked != null) {
+      setState(() {
+        _selectedTime = DateTime(
+          _selectedTime.year,
+          _selectedTime.month,
+          _selectedTime.day,
+          picked.hour,
+          picked.minute,
+        );
+      });
+    }
   }
 
   void _showImagePicker() {
-    showCupertinoModalPopup<void>(
+    showModalBottomSheet<void>(
       context: context,
-      builder: (BuildContext context) => Container(
+      builder: (BuildContext context) => SizedBox(
         height: 400,
-        color: CupertinoColors.systemBackground.resolveFrom(context),
-        child: SafeArea(
-          top: false,
-          child: Column(
-            children: [
-              Container(
+        child: Column(
+          children: [
+            Container(
+              padding: const EdgeInsets.all(16),
+              decoration: BoxDecoration(
+                border: Border(
+                  bottom: BorderSide(color: Colors.grey[300]!, width: 1),
+                ),
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const Text(
+                    '이미지 선택',
+                    style: TextStyle(fontSize: 17, fontWeight: FontWeight.w600),
+                  ),
+                  TextButton(
+                    onPressed: () => context.pop(),
+                    child: const Text('완료'),
+                  ),
+                ],
+              ),
+            ),
+            Expanded(
+              child: GridView.builder(
                 padding: const EdgeInsets.all(16),
-                decoration: BoxDecoration(
-                  border: Border(
-                    bottom: BorderSide(
-                      color: CupertinoColors.separator.resolveFrom(context),
-                      width: 0.5,
-                    ),
-                  ),
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 3,
+                  crossAxisSpacing: 12,
+                  mainAxisSpacing: 12,
                 ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    const Text(
-                      '이미지 선택',
-                      style: TextStyle(
-                        fontSize: 17,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                    CupertinoButton(
-                      padding: EdgeInsets.zero,
-                      onPressed: () => context.pop(),
-                      child: const Text('완료'),
-                    ),
-                  ],
-                ),
-              ),
-              Expanded(
-                child: GridView.builder(
-                  padding: const EdgeInsets.all(16),
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 3,
-                    crossAxisSpacing: 12,
-                    mainAxisSpacing: 12,
-                  ),
-                  itemCount: _availableImages.length,
-                  itemBuilder: (context, index) {
-                    final isSelected = _selectedImageIndex == index;
-                    return GestureDetector(
-                      onTap: () {
-                        setState(() {
-                          _selectedImageIndex = index;
-                        });
-                        context.pop();
-                      },
-                      child: Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(8),
-                          border: Border.all(
-                            color: isSelected
-                                ? CupertinoColors.activeBlue
-                                : CupertinoColors.separator,
-                            width: isSelected ? 3 : 1,
-                          ),
-                        ),
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(6),
-                          child: Image.network(
-                            _availableImages[index],
-                            fit: BoxFit.cover,
-                            errorBuilder: (context, error, stackTrace) {
-                              return Container(
-                                color: CupertinoColors.systemGrey5,
-                                child: const Icon(
-                                  CupertinoIcons.photo,
-                                  color: CupertinoColors.systemGrey,
-                                ),
-                              );
-                            },
-                          ),
+                itemCount: _availableImages.length,
+                itemBuilder: (context, index) {
+                  final isSelected = _selectedImageIndex == index;
+                  return InkWell(
+                    onTap: () {
+                      setState(() {
+                        _selectedImageIndex = index;
+                      });
+                      context.pop();
+                    },
+                    child: Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(8),
+                        border: Border.all(
+                          color: isSelected
+                              ? Theme.of(context).colorScheme.primary
+                              : Colors.grey[300]!,
+                          width: isSelected ? 3 : 1,
                         ),
                       ),
-                    );
-                  },
-                ),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(6),
+                        child: Image.network(
+                          _availableImages[index],
+                          fit: BoxFit.cover,
+                          errorBuilder: (context, error, stackTrace) {
+                            return Container(
+                              color: Colors.grey[300],
+                              child: Icon(Icons.photo, color: Colors.grey[600]),
+                            );
+                          },
+                        ),
+                      ),
+                    ),
+                  );
+                },
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
@@ -213,9 +179,9 @@ class _CreatePageState extends State<CreatePage> {
 
   @override
   Widget build(BuildContext context) {
-    return CupertinoPageScaffold(
-      navigationBar: const CupertinoNavigationBar(middle: Text('이벤트 등록')),
-      child: SafeArea(
+    return Scaffold(
+      appBar: AppBar(title: const Text('이벤트 등록')),
+      body: SafeArea(
         child: Column(
           children: [
             Expanded(
@@ -224,30 +190,30 @@ class _CreatePageState extends State<CreatePage> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    GestureDetector(
+                    InkWell(
                       onTap: _showImagePicker,
                       child: Container(
                         width: double.infinity,
                         height: 300,
                         decoration: BoxDecoration(
-                          color: CupertinoColors.systemGrey6,
+                          color: Colors.grey[200],
                           borderRadius: BorderRadius.circular(12),
                         ),
                         child: _selectedImageIndex == null
                             ? Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
-                                children: const [
+                                children: [
                                   Icon(
-                                    CupertinoIcons.photo_on_rectangle,
+                                    Icons.photo_library,
                                     size: 64,
-                                    color: CupertinoColors.systemGrey,
+                                    color: Colors.grey[600],
                                   ),
-                                  SizedBox(height: 12),
+                                  const SizedBox(height: 12),
                                   Text(
                                     '이미지를 선택하세요',
                                     style: TextStyle(
                                       fontSize: 16,
-                                      color: CupertinoColors.systemGrey,
+                                      color: Colors.grey[600],
                                     ),
                                   ),
                                 ],
@@ -259,11 +225,11 @@ class _CreatePageState extends State<CreatePage> {
                                   fit: BoxFit.cover,
                                   errorBuilder: (context, error, stackTrace) {
                                     return Container(
-                                      color: CupertinoColors.systemGrey5,
-                                      child: const Icon(
-                                        CupertinoIcons.photo,
+                                      color: Colors.grey[300],
+                                      child: Icon(
+                                        Icons.photo,
                                         size: 64,
-                                        color: CupertinoColors.systemGrey,
+                                        color: Colors.grey[600],
                                       ),
                                     );
                                   },
@@ -272,77 +238,63 @@ class _CreatePageState extends State<CreatePage> {
                       ),
                     ),
                     const SizedBox(height: 24),
-                    const Text(
+                    Text(
                       '제목',
-                      style: TextStyle(
-                        fontSize: 16,
+                      style: Theme.of(context).textTheme.titleMedium?.copyWith(
                         fontWeight: FontWeight.w600,
-                        color: CupertinoColors.label,
                       ),
                     ),
                     const SizedBox(height: 8),
-                    CupertinoTextField(
+                    TextField(
                       controller: _titleController,
-                      placeholder: '제목을 입력하세요',
-                      padding: const EdgeInsets.all(16),
-                      autofocus: false,
-                      decoration: BoxDecoration(
-                        color: CupertinoColors.systemGrey6,
-                        borderRadius: BorderRadius.circular(8),
+                      decoration: const InputDecoration(
+                        hintText: '제목을 입력하세요',
+                        border: OutlineInputBorder(),
+                        filled: true,
                       ),
                     ),
                     const SizedBox(height: 20),
-                    const Text(
+                    Text(
                       '설명',
-                      style: TextStyle(
-                        fontSize: 16,
+                      style: Theme.of(context).textTheme.titleMedium?.copyWith(
                         fontWeight: FontWeight.w600,
-                        color: CupertinoColors.label,
                       ),
                     ),
                     const SizedBox(height: 8),
-                    CupertinoTextField(
+                    TextField(
                       controller: _descriptionController,
-                      placeholder: '설명을 입력하세요',
-                      maxLines: 4,
-                      padding: const EdgeInsets.all(16),
-                      autofocus: false,
-                      decoration: BoxDecoration(
-                        color: CupertinoColors.systemGrey6,
-                        borderRadius: BorderRadius.circular(8),
+                      decoration: const InputDecoration(
+                        hintText: '설명을 입력하세요',
+                        border: OutlineInputBorder(),
+                        filled: true,
                       ),
+                      maxLines: 4,
                     ),
                     const SizedBox(height: 20),
-                    const Text(
+                    Text(
                       '날짜',
-                      style: TextStyle(
-                        fontSize: 16,
+                      style: Theme.of(context).textTheme.titleMedium?.copyWith(
                         fontWeight: FontWeight.w600,
-                        color: CupertinoColors.label,
                       ),
                     ),
                     const SizedBox(height: 8),
-                    GestureDetector(
+                    InkWell(
                       onTap: _showDatePicker,
-                      child: Container(
-                        padding: const EdgeInsets.all(16),
-                        decoration: BoxDecoration(
-                          color: CupertinoColors.systemGrey6,
-                          borderRadius: BorderRadius.circular(8),
+                      child: InputDecorator(
+                        decoration: const InputDecoration(
+                          border: OutlineInputBorder(),
+                          filled: true,
                         ),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
                               _formatDate(_selectedDate),
-                              style: const TextStyle(
-                                fontSize: 16,
-                                color: CupertinoColors.label,
-                              ),
+                              style: const TextStyle(fontSize: 16),
                             ),
-                            const Icon(
-                              CupertinoIcons.calendar,
-                              color: CupertinoColors.systemGrey,
+                            Icon(
+                              Icons.calendar_today,
+                              color: Colors.grey[600],
                               size: 20,
                             ),
                           ],
@@ -350,36 +302,30 @@ class _CreatePageState extends State<CreatePage> {
                       ),
                     ),
                     const SizedBox(height: 20),
-                    const Text(
+                    Text(
                       '시간',
-                      style: TextStyle(
-                        fontSize: 16,
+                      style: Theme.of(context).textTheme.titleMedium?.copyWith(
                         fontWeight: FontWeight.w600,
-                        color: CupertinoColors.label,
                       ),
                     ),
                     const SizedBox(height: 8),
-                    GestureDetector(
+                    InkWell(
                       onTap: _showTimePicker,
-                      child: Container(
-                        padding: const EdgeInsets.all(16),
-                        decoration: BoxDecoration(
-                          color: CupertinoColors.systemGrey6,
-                          borderRadius: BorderRadius.circular(8),
+                      child: InputDecorator(
+                        decoration: const InputDecoration(
+                          border: OutlineInputBorder(),
+                          filled: true,
                         ),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
                               _formatTime(_selectedTime),
-                              style: const TextStyle(
-                                fontSize: 16,
-                                color: CupertinoColors.label,
-                              ),
+                              style: const TextStyle(fontSize: 16),
                             ),
-                            const Icon(
-                              CupertinoIcons.clock,
-                              color: CupertinoColors.systemGrey,
+                            Icon(
+                              Icons.access_time,
+                              color: Colors.grey[600],
                               size: 20,
                             ),
                           ],
@@ -393,26 +339,21 @@ class _CreatePageState extends State<CreatePage> {
             Container(
               padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
-                color: CupertinoColors.systemBackground,
                 border: Border(
-                  top: BorderSide(color: CupertinoColors.separator, width: 0.5),
+                  top: BorderSide(color: Colors.grey[300]!, width: 1),
                 ),
               ),
               child: Row(
                 children: [
                   Expanded(
-                    child: CupertinoButton(
-                      color: CupertinoColors.systemGrey4,
+                    child: OutlinedButton(
                       onPressed: _handleCancel,
-                      child: const Text(
-                        '취소',
-                        style: TextStyle(color: CupertinoColors.label),
-                      ),
+                      child: const Text('취소'),
                     ),
                   ),
                   const SizedBox(width: 12),
                   Expanded(
-                    child: CupertinoButton.filled(
+                    child: ElevatedButton(
                       onPressed: () {},
                       child: const Text('등록'),
                     ),

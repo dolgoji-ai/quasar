@@ -1,4 +1,4 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import '../screens/event_list_page.dart';
 import '../screens/explore_page.dart';

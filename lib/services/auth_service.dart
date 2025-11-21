@@ -56,9 +56,6 @@ class AuthService {
     }
 
     final GoogleSignInAuthentication auth = await _currentUser!.authentication;
-    return {
-      'idToken': auth.idToken,
-      'accessToken': auth.accessToken,
-    };
+    return {'idToken': auth.idToken, 'accessToken': auth.accessToken};
   }
 }

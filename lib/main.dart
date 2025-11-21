@@ -1,4 +1,4 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'services/auth_service.dart';
 import 'router/app_router.dart';
 
@@ -35,16 +35,27 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     if (!_isInitialized) {
-      return const CupertinoApp(
-        home: Center(child: CupertinoActivityIndicator()),
+      return const MaterialApp(
+        home: Scaffold(body: Center(child: CircularProgressIndicator())),
       );
     }
 
-    return CupertinoApp.router(
+    return MaterialApp.router(
       title: 'Quasar',
-      theme: const CupertinoThemeData(
+      theme: ThemeData(
         brightness: Brightness.light,
-        primaryColor: CupertinoColors.systemBlue,
+        primarySwatch: Colors.blue,
+        useMaterial3: true,
+        appBarTheme: AppBarTheme(
+          backgroundColor: ThemeData.light().scaffoldBackgroundColor,
+          elevation: 0,
+          scrolledUnderElevation: 0,
+          centerTitle: true,
+        ),
+        navigationBarTheme: const NavigationBarThemeData(
+          indicatorColor: Colors.transparent,
+          overlayColor: WidgetStatePropertyAll(Colors.transparent),
+        ),
       ),
       routerConfig: _appRouter.router,
     );

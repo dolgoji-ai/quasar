@@ -1,43 +1,110 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
 
-class ScaffoldWithNavBar extends StatelessWidget {
+class ScaffoldWithNavBar extends StatefulWidget {
   final StatefulNavigationShell navigationShell;
 
   const ScaffoldWithNavBar({super.key, required this.navigationShell});
 
-  void _onItemTapped(BuildContext context, int index) {
-    navigationShell.goBranch(
+  @override
+  State<ScaffoldWithNavBar> createState() => _ScaffoldWithNavBarState();
+}
+
+class _ScaffoldWithNavBarState extends State<ScaffoldWithNavBar> {
+  DateTime? _lastBackPressTime;
+  final List<int> _navigationHistory = [0];
+
+  void _onItemTapped(int index) {
+    if (index != widget.navigationShell.currentIndex) {
+      _navigationHistory.add(index);
+    }
+
+    widget.navigationShell.goBranch(
       index,
-      initialLocation: index == navigationShell.currentIndex,
+      initialLocation: index == widget.navigationShell.currentIndex,
     );
+  }
+
+  Future<bool> _onWillPop() async {
+    if (_navigationHistory.length > 1) {
+      _navigationHistory.removeLast();
+      final previousIndex = _navigationHistory.last;
+      widget.navigationShell.goBranch(previousIndex);
+      return false;
+    }
+
+    final now = DateTime.now();
+    if (_lastBackPressTime == null ||
+        now.difference(_lastBackPressTime!) > const Duration(seconds: 2)) {
+      _lastBackPressTime = now;
+
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('한번 더 뒤로가기를 시도할 경우 종료됩니다.'),
+            duration: Duration(seconds: 2),
+          ),
+        );
+      }
+      return false;
+    }
+
+    SystemNavigator.pop();
+    return true;
   }
 
   @override
   Widget build(BuildContext context) {
-    final currentIndex = navigationShell.currentIndex;
+    final currentIndex = widget.navigationShell.currentIndex;
     final shouldHideNavBar = currentIndex == 2;
 
-    return CupertinoPageScaffold(
-      child: Column(
-        children: [
-          Expanded(child: navigationShell),
-          if (!shouldHideNavBar)
-            CupertinoTabBar(
-              iconSize: 24,
-              currentIndex: currentIndex,
-              onTap: (index) => _onItemTapped(context, index),
-              items: const [
-                BottomNavigationBarItem(icon: Icon(CupertinoIcons.house)),
-                BottomNavigationBarItem(icon: Icon(CupertinoIcons.globe)),
-                BottomNavigationBarItem(icon: Icon(CupertinoIcons.add_circled)),
-                BottomNavigationBarItem(
-                  icon: Icon(CupertinoIcons.photo_on_rectangle),
+    return PopScope(
+      canPop: false,
+      onPopInvokedWithResult: (bool didPop, dynamic result) async {
+        if (didPop) return;
+        await _onWillPop();
+      },
+      child: Scaffold(
+        body: widget.navigationShell,
+        bottomNavigationBar: shouldHideNavBar
+            ? null
+            : SizedBox(
+                height: 60,
+                child: NavigationBar(
+                  selectedIndex: currentIndex,
+                  onDestinationSelected: _onItemTapped,
+                  labelBehavior: NavigationDestinationLabelBehavior.alwaysHide,
+                  backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+                  destinations: [
+                    NavigationDestination(
+                      icon: Icon(Icons.home_outlined),
+                      selectedIcon: Icon(Icons.home),
+                      label: '',
+                    ),
+                    NavigationDestination(
+                      icon: Icon(Icons.explore_outlined),
+                      selectedIcon: Icon(Icons.explore),
+                      label: '',
+                    ),
+                    NavigationDestination(
+                      icon: Icon(Icons.add_circle_outline),
+                      selectedIcon: Icon(Icons.add_circle),
+                      label: '',
+                    ),
+                    NavigationDestination(
+                      icon: Icon(Icons.photo_library_outlined),
+                      selectedIcon: Icon(Icons.photo_library),
+                      label: '',
+                    ),
+                    NavigationDestination(
+                      icon: Icon(Icons.person_outline),
+                      selectedIcon: Icon(Icons.person),
+                      label: '',
+                    ),
+                  ],
                 ),
-                BottomNavigationBarItem(icon: Icon(CupertinoIcons.person_circle)),
-              ],
-            ),
-        ],
+              ),
       ),
     );
   }

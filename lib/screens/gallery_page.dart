@@ -1,31 +1,23 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 class GalleryPage extends StatelessWidget {
   const GalleryPage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return CupertinoPageScaffold(
-      navigationBar: const CupertinoNavigationBar(
-        middle: Text('갤러리'),
-      ),
-      child: Center(
+    return Scaffold(
+      appBar: AppBar(title: const Text('갤러리')),
+      body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(
-              CupertinoIcons.photo_on_rectangle,
-              size: 64,
-              color: CupertinoColors.systemGrey,
-            ),
+            Icon(Icons.photo_library, size: 64, color: Colors.grey[600]),
             const SizedBox(height: 16),
             Text(
               '갤러리 페이지',
-              style: TextStyle(
-                fontSize: 24,
-                fontWeight: FontWeight.w600,
-                color: CupertinoColors.label,
-              ),
+              style: Theme.of(
+                context,
+              ).textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.w600),
             ),
           ],
         ),

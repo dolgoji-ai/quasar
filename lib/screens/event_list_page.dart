@@ -1,4 +1,4 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import '../models/event.dart';
@@ -88,9 +88,7 @@ class _EventListContentState extends State<EventListContent> {
         host: '윤지훈',
         imageUrl: 'https://picsum.photos/200/200?random=7',
         eventDate: DateTime(2025, 5, 5, 18, 30),
-        memberList: [
-          Member(name: '윤지훈', phoneNumber: '010-5679-0123'),
-        ],
+        memberList: [Member(name: '윤지훈', phoneNumber: '010-5679-0123')],
       ),
       Event(
         id: '5',
@@ -196,262 +194,219 @@ class _EventListContentState extends State<EventListContent> {
 
   @override
   Widget build(BuildContext context) {
-    return CupertinoPageScaffold(
-      navigationBar: const CupertinoNavigationBar(middle: Text('이벤트 목록')),
-      child: SafeArea(
-        child: CustomScrollView(
-          slivers: [
-            CupertinoSliverRefreshControl(onRefresh: _handleRefresh),
-            SliverToBoxAdapter(
-              child: Padding(
-                padding: const EdgeInsets.fromLTRB(16, 16, 16, 12),
-                child: Text(
-                  '함께해서 반가워요, ${AuthService().userName}님!',
-                  style: TextStyle(
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold,
-                    color: CupertinoColors.label,
+    return Scaffold(
+      appBar: AppBar(title: const Text('이벤트 목록')),
+      body: SafeArea(
+        child: RefreshIndicator(
+          onRefresh: _handleRefresh,
+          child: CustomScrollView(
+            slivers: [
+              SliverToBoxAdapter(
+                child: Padding(
+                  padding: const EdgeInsets.fromLTRB(16, 16, 16, 12),
+                  child: Text(
+                    '함께해서 반가워요, ${AuthService().userName}님!',
+                    style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
               ),
-            ),
-            SliverToBoxAdapter(
-              child: Padding(
-                padding: const EdgeInsets.fromLTRB(16, 0, 16, 4),
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    GestureDetector(
-                      onTap: () {
-                        setState(() {
-                          showUpcomingOnly = !showUpcomingOnly;
-                        });
-                      },
-                      child: Container(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 16,
-                          vertical: 10,
-                        ),
-                        decoration: BoxDecoration(
-                          color: CupertinoColors.systemGrey6,
-                          border: Border.all(
-                            color: showUpcomingOnly
-                                ? CupertinoColors.systemGrey
-                                : CupertinoColors.systemGrey6,
-                            width: 1,
-                          ),
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                        child: Text(
-                          'Upcoming',
-                          style: TextStyle(
-                            fontSize: 15,
-                            fontWeight: FontWeight.w600,
-                            color: showUpcomingOnly
-                                ? CupertinoColors.systemGrey
-                                : CupertinoColors.systemGrey,
-                          ),
-                        ),
+              SliverToBoxAdapter(
+                child: Padding(
+                  padding: const EdgeInsets.fromLTRB(16, 0, 16, 4),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      FilterChip(
+                        label: const Text('Upcoming'),
+                        selected: showUpcomingOnly,
+                        onSelected: (selected) {
+                          setState(() {
+                            showUpcomingOnly = selected;
+                          });
+                        },
                       ),
-                    ),
-                    const SizedBox(width: 8),
-                    GestureDetector(
-                      onTap: () {
-                        setState(() {
-                          showHostingOnly = !showHostingOnly;
-                        });
-                      },
-                      child: Container(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 16,
-                          vertical: 10,
-                        ),
-                        decoration: BoxDecoration(
-                          color: CupertinoColors.systemGrey6,
-                          border: Border.all(
-                            color: showHostingOnly
-                                ? CupertinoColors.systemGrey
-                                : CupertinoColors.systemGrey6,
-                            width: 1,
-                          ),
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                        child: Text(
-                          'Hosting',
-                          style: TextStyle(
-                            fontSize: 15,
-                            fontWeight: FontWeight.w600,
-                            color: showHostingOnly
-                                ? CupertinoColors.systemGrey
-                                : CupertinoColors.systemGrey,
-                          ),
-                        ),
+                      const SizedBox(width: 8),
+                      FilterChip(
+                        label: const Text('Hosting'),
+                        selected: showHostingOnly,
+                        onSelected: (selected) {
+                          setState(() {
+                            showHostingOnly = selected;
+                          });
+                        },
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
-            ),
-            SliverPadding(
-              padding: const EdgeInsets.all(16),
-              sliver: SliverList(
-                delegate: SliverChildBuilderDelegate((context, index) {
-                  final event = filteredEvents[index];
-                  return GestureDetector(
-                    onTap: () => _navigateToDetail(event),
-                    child: Container(
+              SliverPadding(
+                padding: const EdgeInsets.all(16),
+                sliver: SliverList(
+                  delegate: SliverChildBuilderDelegate((context, index) {
+                    final event = filteredEvents[index];
+                    return Card(
                       margin: const EdgeInsets.only(bottom: 16),
-                      padding: const EdgeInsets.all(16),
-                      decoration: BoxDecoration(
-                        color: CupertinoColors.white,
+                      elevation: 0,
+                      color: Theme.of(context).scaffoldBackgroundColor,
+                      shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(12),
-                        boxShadow: [
-                          BoxShadow(
-                            color: CupertinoColors.systemGrey.withValues(alpha: 0.2),
-                            blurRadius: 8,
-                            offset: const Offset(0, 2),
-                          ),
-                        ],
+                        side: BorderSide(color: Colors.grey[300]!, width: 1),
                       ),
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          SizedBox(
-                            width: 120,
-                            height: 120,
-                            child: Stack(
-                              children: [
-                                ClipRRect(
-                                  borderRadius: BorderRadius.circular(8),
-                                  child: Image.network(
-                                    event.imageUrl,
-                                    width: 120,
-                                    height: 120,
-                                    fit: BoxFit.cover,
-                                    errorBuilder: (context, error, stackTrace) {
-                                      return Container(
+                      child: InkWell(
+                        onTap: () => _navigateToDetail(event),
+                        borderRadius: BorderRadius.circular(12),
+                        child: Padding(
+                          padding: const EdgeInsets.all(16),
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              SizedBox(
+                                width: 120,
+                                height: 120,
+                                child: Stack(
+                                  children: [
+                                    ClipRRect(
+                                      borderRadius: BorderRadius.circular(8),
+                                      child: Image.network(
+                                        event.imageUrl,
                                         width: 120,
                                         height: 120,
-                                        color: CupertinoColors.systemGrey5,
-                                        child: const Icon(
-                                          CupertinoIcons.photo,
-                                          color: CupertinoColors.systemGrey,
-                                        ),
-                                      );
-                                    },
-                                  ),
-                                ),
-                                Positioned(
-                                  bottom: 0,
-                                  left: 0,
-                                  right: 0,
-                                  child: Opacity(
-                                    opacity: 0.8,
-                                    child: Container(
-                                      padding: const EdgeInsets.symmetric(
-                                        horizontal: 8,
-                                        vertical: 4,
+                                        fit: BoxFit.cover,
+                                        errorBuilder:
+                                            (context, error, stackTrace) {
+                                              return Container(
+                                                width: 120,
+                                                height: 120,
+                                                color: Colors.grey[300],
+                                                child: Icon(
+                                                  Icons.photo,
+                                                  color: Colors.grey[600],
+                                                ),
+                                              );
+                                            },
                                       ),
-                                      decoration: BoxDecoration(
-                                        color: getStatusColor(event.status),
-                                        borderRadius: const BorderRadius.only(
-                                          bottomLeft: Radius.circular(8),
-                                          bottomRight: Radius.circular(8),
-                                        ),
-                                      ),
-                                      child: Text(
-                                        event.status.displayName,
-                                        textAlign: TextAlign.center,
-                                        style: const TextStyle(
-                                          color: CupertinoColors.white,
-                                          fontSize: 11,
-                                          fontWeight: FontWeight.w600,
+                                    ),
+                                    Positioned(
+                                      bottom: 0,
+                                      left: 0,
+                                      right: 0,
+                                      child: Opacity(
+                                        opacity: 0.8,
+                                        child: Container(
+                                          padding: const EdgeInsets.symmetric(
+                                            horizontal: 8,
+                                            vertical: 4,
+                                          ),
+                                          decoration: BoxDecoration(
+                                            color: getStatusColor(event.status),
+                                            borderRadius:
+                                                const BorderRadius.only(
+                                                  bottomLeft: Radius.circular(
+                                                    8,
+                                                  ),
+                                                  bottomRight: Radius.circular(
+                                                    8,
+                                                  ),
+                                                ),
+                                          ),
+                                          child: Text(
+                                            event.status.displayName,
+                                            textAlign: TextAlign.center,
+                                            style: const TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 11,
+                                              fontWeight: FontWeight.w600,
+                                            ),
+                                          ),
                                         ),
                                       ),
                                     ),
-                                  ),
+                                  ],
                                 ),
-                              ],
-                            ),
+                              ),
+                              const SizedBox(width: 16),
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      event.title,
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .titleMedium
+                                          ?.copyWith(
+                                            fontWeight: FontWeight.w600,
+                                          ),
+                                    ),
+                                    const SizedBox(height: 8),
+                                    Row(
+                                      children: [
+                                        Icon(
+                                          Icons.person,
+                                          size: 16,
+                                          color: Colors.grey[600],
+                                        ),
+                                        const SizedBox(width: 4),
+                                        Text(
+                                          event.host,
+                                          style: TextStyle(
+                                            fontSize: 14,
+                                            color: Colors.grey[600],
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    const SizedBox(height: 6),
+                                    Row(
+                                      children: [
+                                        Icon(
+                                          Icons.calendar_today,
+                                          size: 16,
+                                          color: Colors.grey[600],
+                                        ),
+                                        const SizedBox(width: 4),
+                                        Text(
+                                          formatEventDate(event.eventDate),
+                                          style: TextStyle(
+                                            fontSize: 14,
+                                            color: Colors.grey[600],
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    const SizedBox(height: 6),
+                                    Row(
+                                      children: [
+                                        Icon(
+                                          Icons.people,
+                                          size: 16,
+                                          color: Colors.grey[600],
+                                        ),
+                                        const SizedBox(width: 4),
+                                        Text(
+                                          '모임원 ${event.memberList.length}명',
+                                          style: TextStyle(
+                                            fontSize: 14,
+                                            color: Colors.grey[600],
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
                           ),
-                          const SizedBox(width: 16),
-                          Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  event.title,
-                                  style: const TextStyle(
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.w600,
-                                    color: CupertinoColors.label,
-                                  ),
-                                ),
-                                const SizedBox(height: 8),
-                                Row(
-                                  children: [
-                                    const Icon(
-                                      CupertinoIcons.person_fill,
-                                      size: 16,
-                                      color: CupertinoColors.systemGrey,
-                                    ),
-                                    const SizedBox(width: 4),
-                                    Text(
-                                      event.host,
-                                      style: const TextStyle(
-                                        fontSize: 14,
-                                        color: CupertinoColors.systemGrey,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                const SizedBox(height: 6),
-                                Row(
-                                  children: [
-                                    const Icon(
-                                      CupertinoIcons.calendar,
-                                      size: 16,
-                                      color: CupertinoColors.systemGrey,
-                                    ),
-                                    const SizedBox(width: 4),
-                                    Text(
-                                      formatEventDate(event.eventDate),
-                                      style: const TextStyle(
-                                        fontSize: 14,
-                                        color: CupertinoColors.systemGrey,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                const SizedBox(height: 6),
-                                Row(
-                                  children: [
-                                    const Icon(
-                                      CupertinoIcons.person_2_fill,
-                                      size: 16,
-                                      color: CupertinoColors.systemGrey,
-                                    ),
-                                    const SizedBox(width: 4),
-                                    Text(
-                                      '모임원 ${event.memberList.length}명',
-                                      style: const TextStyle(
-                                        fontSize: 14,
-                                        color: CupertinoColors.systemGrey,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
+                        ),
                       ),
-                    ),
-                  );
-                }, childCount: filteredEvents.length),
+                    );
+                  }, childCount: filteredEvents.length),
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
