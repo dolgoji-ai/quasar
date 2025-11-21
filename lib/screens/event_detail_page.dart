@@ -114,7 +114,7 @@ class _EventDetailPageState extends State<EventDetailPage> {
                       Row(
                         children: [
                           Icon(
-                            Icons.person,
+                            Icons.workspace_premium,
                             size: 20,
                             color: Colors.grey[600],
                           ),

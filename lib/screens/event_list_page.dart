@@ -353,7 +353,7 @@ class _EventListContentState extends State<EventListContent> {
                                     Row(
                                       children: [
                                         Icon(
-                                          Icons.person,
+                                          Icons.workspace_premium,
                                           size: 16,
                                           color: Colors.grey[600],
                                         ),
