@@ -36,6 +36,34 @@ Quasar is a mobile application built with Flutter, targeting iOS and Android pla
 - Use flat colors without depth effects
 - Prefer simple, clean button styles without Material-style shadows
 
+### Input Field Design
+- **Follow iOS flat design style for all input fields**
+- Background color must match the theme's scaffold background color
+- Use `filled: true` with `fillColor: Theme.of(context).scaffoldBackgroundColor`
+- Apply subtle borders using `OutlineInputBorder()`
+- For TextField:
+  ```dart
+  TextField(
+    decoration: InputDecoration(
+      border: const OutlineInputBorder(),
+      filled: true,
+      fillColor: Theme.of(context).scaffoldBackgroundColor,
+    ),
+  )
+  ```
+- For InputDecorator (date/time pickers):
+  ```dart
+  InputDecorator(
+    decoration: InputDecoration(
+      border: const OutlineInputBorder(),
+      filled: true,
+      fillColor: Theme.of(context).scaffoldBackgroundColor,
+    ),
+  )
+  ```
+- Avoid heavy shadows or Material-style elevation effects
+- Keep input fields clean and minimal
+
 ### Pull-to-Refresh
 - All list pages should implement pull-to-refresh functionality
 - Use `RefreshIndicator` widget wrapping scrollable content

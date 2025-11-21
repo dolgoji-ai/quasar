@@ -196,8 +196,12 @@ class _CreatePageState extends State<CreatePage> {
                         width: double.infinity,
                         height: 300,
                         decoration: BoxDecoration(
-                          color: Colors.grey[200],
+                          color: Theme.of(context).scaffoldBackgroundColor,
                           borderRadius: BorderRadius.circular(12),
+                          border: Border.all(
+                            color: Colors.grey[300]!,
+                            width: 1,
+                          ),
                         ),
                         child: _selectedImageIndex == null
                             ? Column(
@@ -247,10 +251,11 @@ class _CreatePageState extends State<CreatePage> {
                     const SizedBox(height: 8),
                     TextField(
                       controller: _titleController,
-                      decoration: const InputDecoration(
+                      decoration: InputDecoration(
                         hintText: '제목을 입력하세요',
-                        border: OutlineInputBorder(),
+                        border: const OutlineInputBorder(),
                         filled: true,
+                        fillColor: Theme.of(context).scaffoldBackgroundColor,
                       ),
                     ),
                     const SizedBox(height: 20),
@@ -263,10 +268,11 @@ class _CreatePageState extends State<CreatePage> {
                     const SizedBox(height: 8),
                     TextField(
                       controller: _descriptionController,
-                      decoration: const InputDecoration(
+                      decoration: InputDecoration(
                         hintText: '설명을 입력하세요',
-                        border: OutlineInputBorder(),
+                        border: const OutlineInputBorder(),
                         filled: true,
+                        fillColor: Theme.of(context).scaffoldBackgroundColor,
                       ),
                       maxLines: 4,
                     ),
@@ -281,9 +287,10 @@ class _CreatePageState extends State<CreatePage> {
                     InkWell(
                       onTap: _showDatePicker,
                       child: InputDecorator(
-                        decoration: const InputDecoration(
-                          border: OutlineInputBorder(),
+                        decoration: InputDecoration(
+                          border: const OutlineInputBorder(),
                           filled: true,
+                          fillColor: Theme.of(context).scaffoldBackgroundColor,
                         ),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -312,9 +319,10 @@ class _CreatePageState extends State<CreatePage> {
                     InkWell(
                       onTap: _showTimePicker,
                       child: InputDecorator(
-                        decoration: const InputDecoration(
-                          border: OutlineInputBorder(),
+                        decoration: InputDecoration(
+                          border: const OutlineInputBorder(),
                           filled: true,
+                          fillColor: Theme.of(context).scaffoldBackgroundColor,
                         ),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
