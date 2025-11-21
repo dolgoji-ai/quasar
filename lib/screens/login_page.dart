@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
+
 import '../services/auth_service.dart';
 
 class LoginPage extends StatefulWidget {
@@ -60,18 +61,14 @@ class _LoginPageState extends State<LoginPage> {
                 else
                   SizedBox(
                     width: double.infinity,
-                    child: OutlinedButton(
+                    child: ElevatedButton(
                       onPressed: _handleSignIn,
-                      style: OutlinedButton.styleFrom(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 24,
-                          vertical: 12,
-                        ),
-                        backgroundColor: Colors.white,
-                        side: const BorderSide(
-                          color: Color(0xFF747775),
-                          width: 1,
-                        ),
+                      style: ElevatedButton.styleFrom(
+                        padding: const EdgeInsets.symmetric(vertical: 14),
+                        backgroundColor: Theme.of(
+                          context,
+                        ).scaffoldBackgroundColor,
+                        side: BorderSide(color: Colors.grey[350]!, width: 1),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(40),
                         ),
