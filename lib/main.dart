@@ -56,6 +56,18 @@ class _MyAppState extends State<MyApp> {
           indicatorColor: Colors.transparent,
           overlayColor: WidgetStatePropertyAll(Colors.transparent),
         ),
+        elevatedButtonTheme: ElevatedButtonThemeData(
+          style: ElevatedButton.styleFrom(
+            elevation: 0,
+            shadowColor: Colors.transparent,
+          ),
+        ),
+        outlinedButtonTheme: OutlinedButtonThemeData(
+          style: OutlinedButton.styleFrom(elevation: 0),
+        ),
+        textButtonTheme: TextButtonThemeData(
+          style: TextButton.styleFrom(elevation: 0),
+        ),
       ),
       routerConfig: _appRouter.router,
     );

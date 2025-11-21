@@ -30,6 +30,12 @@ Quasar is a mobile application built with Flutter, targeting iOS and Android pla
 - Use Material Design 3 components and patterns
 - Follow Material Design guidelines for consistency across the app
 
+### Button Design
+- **All buttons must use iOS flat design style**
+- Remove elevation/shadow from buttons (`elevation: 0`)
+- Use flat colors without depth effects
+- Prefer simple, clean button styles without Material-style shadows
+
 ### Pull-to-Refresh
 - All list pages should implement pull-to-refresh functionality
 - Use `RefreshIndicator` widget wrapping scrollable content
