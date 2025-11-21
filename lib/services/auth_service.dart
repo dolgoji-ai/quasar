@@ -11,7 +11,7 @@ class AuthService {
 
   final GoogleSignIn _googleSignIn = GoogleSignIn(
     clientId: Platform.isIOS
-        ? '445075180949-d8lupbc4m8lactriq7ut0ip6vvnogq29.apps.googleusercontent.com'
+        ? '445075180949-dqa2u0j3n15jrodjdt5l4mjpt6kcgqim.apps.googleusercontent.com'
         : null,
     scopes: ['email', 'profile'],
   );

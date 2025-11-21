@@ -66,41 +66,39 @@ class _ScaffoldWithNavBarState extends State<ScaffoldWithNavBar> {
       },
       child: Scaffold(
         body: widget.navigationShell,
-        bottomNavigationBar: SizedBox(
-          height: 60,
-          child: NavigationBar(
-            selectedIndex: currentIndex,
-            onDestinationSelected: _onItemTapped,
-            labelBehavior: NavigationDestinationLabelBehavior.alwaysHide,
-            backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-            destinations: [
-              NavigationDestination(
-                icon: Icon(Icons.home_outlined),
-                selectedIcon: Icon(Icons.home),
-                label: '',
-              ),
-              NavigationDestination(
-                icon: Icon(Icons.contacts_outlined),
-                selectedIcon: Icon(Icons.contacts),
-                label: '',
-              ),
-              NavigationDestination(
-                icon: Icon(Icons.explore_outlined),
-                selectedIcon: Icon(Icons.explore),
-                label: '',
-              ),
-              NavigationDestination(
-                icon: Icon(Icons.photo_library_outlined),
-                selectedIcon: Icon(Icons.photo_library),
-                label: '',
-              ),
-              NavigationDestination(
-                icon: Icon(Icons.person_outline),
-                selectedIcon: Icon(Icons.person),
-                label: '',
-              ),
-            ],
-          ),
+        bottomNavigationBar: NavigationBar(
+          selectedIndex: currentIndex,
+          onDestinationSelected: _onItemTapped,
+          labelBehavior: NavigationDestinationLabelBehavior.alwaysHide,
+          backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+          height: 50,
+          destinations: [
+            NavigationDestination(
+              icon: Icon(Icons.home_outlined),
+              selectedIcon: Icon(Icons.home),
+              label: '',
+            ),
+            NavigationDestination(
+              icon: Icon(Icons.contacts_outlined),
+              selectedIcon: Icon(Icons.contacts),
+              label: '',
+            ),
+            NavigationDestination(
+              icon: Icon(Icons.explore_outlined),
+              selectedIcon: Icon(Icons.explore),
+              label: '',
+            ),
+            NavigationDestination(
+              icon: Icon(Icons.photo_library_outlined),
+              selectedIcon: Icon(Icons.photo_library),
+              label: '',
+            ),
+            NavigationDestination(
+              icon: Icon(Icons.person_outline),
+              selectedIcon: Icon(Icons.person),
+              label: '',
+            ),
+          ],
         ),
       ),
     );
