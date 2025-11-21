@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import '../models/event.dart';
+import '../repositories/event_repository.dart';
 import '../utils/color_utils.dart';
 import '../utils/date_utils.dart';
 
@@ -15,9 +16,30 @@ class EventDetailPage extends StatefulWidget {
 }
 
 class _EventDetailPageState extends State<EventDetailPage> {
-  Future<void> _handleRefresh() async {
-    await Future.delayed(const Duration(seconds: 1));
-    setState(() {});
+  final EventRepository _eventRepository = EventRepository();
+  late Event _currentEvent;
+  bool isLoading = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _currentEvent = widget.event;
+    _loadEventDetail();
+  }
+
+  Future<void> _loadEventDetail() async {
+    setState(() {
+      isLoading = true;
+    });
+
+    final event = await _eventRepository.getEventById(widget.event.id);
+
+    setState(() {
+      if (event != null) {
+        _currentEvent = event;
+      }
+      isLoading = false;
+    });
   }
 
   @override
@@ -32,7 +54,7 @@ class _EventDetailPageState extends State<EventDetailPage> {
       ),
       body: SafeArea(
         child: RefreshIndicator(
-          onRefresh: _handleRefresh,
+          onRefresh: _loadEventDetail,
           child: SingleChildScrollView(
             physics: const AlwaysScrollableScrollPhysics(),
             child: Padding(
@@ -41,7 +63,7 @@ class _EventDetailPageState extends State<EventDetailPage> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Text(
-                    widget.event.title,
+                    _currentEvent.title,
                     style: Theme.of(context).textTheme.headlineSmall?.copyWith(
                       fontWeight: FontWeight.bold,
                     ),
@@ -56,7 +78,7 @@ class _EventDetailPageState extends State<EventDetailPage> {
                         ClipRRect(
                           borderRadius: BorderRadius.circular(16),
                           child: Image.network(
-                            widget.event.imageUrl,
+                            _currentEvent.imageUrl,
                             width: double.infinity,
                             height: 300,
                             fit: BoxFit.cover,
@@ -86,14 +108,14 @@ class _EventDetailPageState extends State<EventDetailPage> {
                                 vertical: 4,
                               ),
                               decoration: BoxDecoration(
-                                color: getStatusColor(widget.event.status),
+                                color: getStatusColor(_currentEvent.status),
                                 borderRadius: const BorderRadius.only(
                                   bottomLeft: Radius.circular(16),
                                   bottomRight: Radius.circular(16),
                                 ),
                               ),
                               child: Text(
-                                widget.event.status.displayName,
+                                _currentEvent.status.displayName,
                                 textAlign: TextAlign.center,
                                 style: const TextStyle(
                                   color: Colors.white,
@@ -129,7 +151,7 @@ class _EventDetailPageState extends State<EventDetailPage> {
                           ),
                           const SizedBox(width: 16),
                           Text(
-                            widget.event.host,
+                            _currentEvent.host,
                             style: Theme.of(context).textTheme.titleMedium
                                 ?.copyWith(fontWeight: FontWeight.w600),
                           ),
@@ -154,7 +176,7 @@ class _EventDetailPageState extends State<EventDetailPage> {
                           ),
                           const SizedBox(width: 16),
                           Text(
-                            formatEventDate(widget.event.eventDate),
+                            formatEventDate(_currentEvent.eventDate),
                             style: Theme.of(context).textTheme.titleMedium
                                 ?.copyWith(fontWeight: FontWeight.w600),
                           ),
@@ -186,7 +208,7 @@ class _EventDetailPageState extends State<EventDetailPage> {
                           Wrap(
                             spacing: 8,
                             runSpacing: 8,
-                            children: widget.event.memberList
+                            children: _currentEvent.memberList
                                 .map(
                                   (member) => Chip(
                                     labelPadding: EdgeInsets.zero,
