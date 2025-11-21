@@ -75,7 +75,7 @@ class ProfilePage extends StatelessWidget {
                       borderRadius: BorderRadius.circular(12),
                     ),
                   ),
-                  child: const Text('로그아웃'),
+                  child: const Text('로그아웃', style: TextStyle(fontSize: 20)),
                 ),
               ),
             ],
