@@ -57,7 +57,7 @@ class _ScaffoldWithNavBarState extends State<ScaffoldWithNavBar> {
   @override
   Widget build(BuildContext context) {
     final currentIndex = widget.navigationShell.currentIndex;
-    final shouldHideNavBar = currentIndex == 2;
+    final shouldHideNavBar = currentIndex == 3;
 
     return PopScope(
       canPop: false,
@@ -85,6 +85,11 @@ class _ScaffoldWithNavBarState extends State<ScaffoldWithNavBar> {
                     NavigationDestination(
                       icon: Icon(Icons.explore_outlined),
                       selectedIcon: Icon(Icons.explore),
+                      label: '',
+                    ),
+                    NavigationDestination(
+                      icon: Icon(Icons.contacts_outlined),
+                      selectedIcon: Icon(Icons.contacts),
                       label: '',
                     ),
                     NavigationDestination(

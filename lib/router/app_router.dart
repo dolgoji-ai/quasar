@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import '../screens/event_list_page.dart';
 import '../screens/explore_page.dart';
+import '../screens/contacts_page.dart';
 import '../screens/gallery_page.dart';
 import '../screens/profile_page.dart';
 import '../screens/create_page.dart';
@@ -72,6 +73,14 @@ class AppRouter {
               GoRoute(
                 path: '/explore',
                 builder: (context, state) => const ExplorePage(),
+              ),
+            ],
+          ),
+          StatefulShellBranch(
+            routes: [
+              GoRoute(
+                path: '/contacts',
+                builder: (context, state) => const ContactsPage(),
               ),
             ],
           ),
