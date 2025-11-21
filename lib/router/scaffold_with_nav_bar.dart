@@ -80,13 +80,13 @@ class _ScaffoldWithNavBarState extends State<ScaffoldWithNavBar> {
                 label: '',
               ),
               NavigationDestination(
-                icon: Icon(Icons.explore_outlined),
-                selectedIcon: Icon(Icons.explore),
+                icon: Icon(Icons.contacts_outlined),
+                selectedIcon: Icon(Icons.contacts),
                 label: '',
               ),
               NavigationDestination(
-                icon: Icon(Icons.contacts_outlined),
-                selectedIcon: Icon(Icons.contacts),
+                icon: Icon(Icons.explore_outlined),
+                selectedIcon: Icon(Icons.explore),
                 label: '',
               ),
               NavigationDestination(

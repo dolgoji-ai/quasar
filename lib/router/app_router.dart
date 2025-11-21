@@ -71,16 +71,16 @@ class AppRouter {
           StatefulShellBranch(
             routes: [
               GoRoute(
-                path: '/explore',
-                builder: (context, state) => const ExplorePage(),
+                path: '/contacts',
+                builder: (context, state) => const ContactsPage(),
               ),
             ],
           ),
           StatefulShellBranch(
             routes: [
               GoRoute(
-                path: '/contacts',
-                builder: (context, state) => const ContactsPage(),
+                path: '/explore',
+                builder: (context, state) => const ExplorePage(),
               ),
             ],
           ),
