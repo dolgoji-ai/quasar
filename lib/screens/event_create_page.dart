@@ -332,7 +332,19 @@ class _EventCreatePageState extends State<EventCreatePage> {
                 width: double.infinity,
                 child: ElevatedButton(
                   onPressed: () {},
-                  child: const Text('등록'),
+                  style: ElevatedButton.styleFrom(
+                    padding: const EdgeInsets.symmetric(vertical: 14),
+                    backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+                    foregroundColor: Colors.black,
+                    side: BorderSide(color: Colors.grey[350]!, width: 1),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(40),
+                    ),
+                  ),
+                  child: const Text(
+                    '등록하기',
+                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
+                  ),
                 ),
               ),
             ),
