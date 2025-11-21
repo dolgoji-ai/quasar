@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
-
-import '../services/auth_service.dart';
+import 'package:quasar/services/auth_service.dart';
 
 class LoginPage extends StatefulWidget {
   final AuthService authService;

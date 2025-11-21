@@ -1,4 +1,4 @@
-import '../enums/event_status.dart';
+import 'package:quasar/enums/event_status.dart';
 
 class Member {
   final String name;

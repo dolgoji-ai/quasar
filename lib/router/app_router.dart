@@ -1,17 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-
-import '../models/event.dart';
-import '../screens/contacts_page.dart';
-import '../screens/event_create_page.dart';
-import '../screens/event_detail_page.dart';
-import '../screens/event_list_page.dart';
-import '../screens/explore_page.dart';
-import '../screens/gallery_page.dart';
-import '../screens/login_page.dart';
-import '../screens/profile_page.dart';
-import '../services/auth_service.dart';
-import '../widgets/app_bottom_nav_bar_widget.dart';
+import 'package:quasar/models/event.dart';
+import 'package:quasar/screens/contacts_page.dart';
+import 'package:quasar/screens/event_create_page.dart';
+import 'package:quasar/screens/event_detail_page.dart';
+import 'package:quasar/screens/event_list_page.dart';
+import 'package:quasar/screens/explore_page.dart';
+import 'package:quasar/screens/gallery_page.dart';
+import 'package:quasar/screens/login_page.dart';
+import 'package:quasar/screens/profile_page.dart';
+import 'package:quasar/services/auth_service.dart';
+import 'package:quasar/widgets/app_bottom_nav_bar_widget.dart';
 
 final GlobalKey<NavigatorState> _rootNavigatorKey = GlobalKey<NavigatorState>();
 

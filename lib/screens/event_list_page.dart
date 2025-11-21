@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-
-import '../models/event.dart';
-import '../repositories/event_repository.dart';
-import '../services/auth_service.dart';
-import '../utils/color_utils.dart';
-import '../utils/date_utils.dart';
+import 'package:quasar/models/event.dart';
+import 'package:quasar/repositories/event_repository.dart';
+import 'package:quasar/services/auth_service.dart';
+import 'package:quasar/utils/color_utils.dart';
+import 'package:quasar/utils/date_utils.dart';
 
 class EventListContent extends StatefulWidget {
   const EventListContent({super.key});

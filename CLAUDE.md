@@ -16,6 +16,24 @@ Quasar is a mobile application built with Flutter, targeting iOS and Android pla
 - Keep functions small and focused on a single responsibility
 - Prefer clean, readable code over clever or complex solutions
 
+### Import Guidelines
+- **Always use absolute package imports instead of relative imports**
+- Use `package:quasar/...` format for all internal imports
+- Example:
+  ```dart
+  // Good: Absolute import
+  import 'package:quasar/models/event.dart';
+  import 'package:quasar/services/auth_service.dart';
+
+  // Bad: Relative import
+  import '../models/event.dart';
+  import '../../services/auth_service.dart';
+  ```
+- Benefits:
+  - More maintainable when files are moved
+  - Consistent import paths regardless of file location
+  - Better readability and clarity
+
 ## Project Structure
 - `lib/` - Main Dart source code
 - `ios/` - iOS native platform code

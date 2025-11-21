@@ -1,5 +1,5 @@
-import '../enums/event_status.dart';
-import '../models/event.dart';
+import 'package:quasar/enums/event_status.dart';
+import 'package:quasar/models/event.dart';
 
 class EventRepository {
   static final EventRepository _instance = EventRepository._internal();
