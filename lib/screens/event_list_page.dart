@@ -217,8 +217,14 @@ class _EventListContentState extends State<EventListContent> {
                 child: Padding(
                   padding: const EdgeInsets.fromLTRB(16, 0, 16, 4),
                   child: Row(
-                    mainAxisSize: MainAxisSize.min,
                     children: [
+                      FilterChip(
+                        onSelected: (_) => context.push('/home/event-create'),
+                        label: const Icon(Icons.add, size: 16),
+                        selected: false,
+                        showCheckmark: false,
+                      ),
+                      const SizedBox(width: 8),
                       FilterChip(
                         label: const Text('Upcoming'),
                         selected: showUpcomingOnly,
@@ -245,7 +251,7 @@ class _EventListContentState extends State<EventListContent> {
                 ),
               ),
               SliverPadding(
-                padding: const EdgeInsets.all(16),
+                padding: const EdgeInsets.fromLTRB(16, 8, 16, 16),
                 sliver: SliverList(
                   delegate: SliverChildBuilderDelegate((context, index) {
                     final event = filteredEvents[index];

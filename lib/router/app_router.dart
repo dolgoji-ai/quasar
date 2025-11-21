@@ -6,6 +6,7 @@ import '../screens/gallery_page.dart';
 import '../screens/profile_page.dart';
 import '../screens/create_page.dart';
 import '../screens/event_detail_page.dart';
+import '../screens/event_create_page.dart';
 import '../screens/login_page.dart';
 import '../services/auth_service.dart';
 import '../models/event.dart';
@@ -57,6 +58,10 @@ class AppRouter {
                       final event = state.extra as Event;
                       return EventDetailPage(event: event);
                     },
+                  ),
+                  GoRoute(
+                    path: 'event-create',
+                    builder: (context, state) => const EventCreatePage(),
                   ),
                 ],
               ),
