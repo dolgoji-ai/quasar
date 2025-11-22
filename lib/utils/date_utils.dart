@@ -1,5 +1,5 @@
 String formatEventDate(DateTime date) {
-  final year = date.year % 100;
+  final year = date.year;
   final month = date.month;
   final day = date.day;
 
@@ -10,5 +10,5 @@ String formatEventDate(DateTime date) {
   final displayHour = hour == 0 ? 12 : (hour > 12 ? hour - 12 : hour);
   final displayMinute = minute.toString().padLeft(2, '0');
 
-  return '$year년 $month월 $day일 $period $displayHour:$displayMinute';
+  return '$year-$month-$day $period $displayHour:$displayMinute';
 }
