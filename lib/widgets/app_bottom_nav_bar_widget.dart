@@ -42,7 +42,10 @@ class _AppBottomNavBarWidgetState extends State<AppBottomNavBarWidget> {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
-            content: Text('한번 더 뒤로가기를 시도할 경우 종료됩니다.'),
+            content: Text(
+              '한번 더 뒤로가기를 시도할 경우 종료됩니다.',
+              textAlign: TextAlign.center,
+            ),
             duration: Duration(seconds: 2),
           ),
         );
