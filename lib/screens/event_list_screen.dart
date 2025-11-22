@@ -114,22 +114,13 @@ class _EventListScreenState extends State<EventListScreen> {
                   ),
                 ),
               ),
-              SliverPadding(
-                padding: const EdgeInsets.fromLTRB(16, 8, 16, 4),
-                sliver: SliverList(
-                  delegate: SliverChildBuilderDelegate((context, index) {
-                    final event = events[index];
-                    return Card(
-                      margin: const EdgeInsets.only(bottom: 16),
-                      elevation: 0,
-                      color: Theme.of(context).scaffoldBackgroundColor,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12),
-                        side: BorderSide(color: Colors.grey[300]!, width: 1),
-                      ),
-                      child: InkWell(
+              SliverList(
+                delegate: SliverChildBuilderDelegate((context, index) {
+                  final event = events[index];
+                  return Column(
+                    children: [
+                      InkWell(
                         onTap: () => _navigateToDetail(event),
-                        borderRadius: BorderRadius.circular(12),
                         child: Padding(
                           padding: const EdgeInsets.all(16),
                           child: Row(
@@ -292,9 +283,18 @@ class _EventListScreenState extends State<EventListScreen> {
                           ),
                         ),
                       ),
-                    );
-                  }, childCount: events.length),
-                ),
+                      if (index < events.length - 1)
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 16),
+                          child: Divider(
+                            height: 1,
+                            thickness: 1,
+                            color: Colors.grey[300],
+                          ),
+                        ),
+                    ],
+                  );
+                }, childCount: events.length),
               ),
             ],
           ),
