@@ -14,6 +14,8 @@ class Event {
   final String host;
   final String imageUrl;
   final DateTime eventDate;
+  final String location;
+  final String locationDetails;
   final List<Member> memberList;
 
   Event({
@@ -23,6 +25,8 @@ class Event {
     required this.host,
     required this.imageUrl,
     required this.eventDate,
+    required this.location,
+    required this.locationDetails,
     required this.memberList,
   });
 }

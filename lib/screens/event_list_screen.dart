@@ -245,6 +245,24 @@ class _EventListScreenState extends State<EventListScreen> {
                                     Row(
                                       children: [
                                         Icon(
+                                          Icons.location_on,
+                                          size: 16,
+                                          color: Colors.grey[600],
+                                        ),
+                                        const SizedBox(width: 4),
+                                        Text(
+                                          event.location,
+                                          style: TextStyle(
+                                            fontSize: 14,
+                                            color: Colors.grey[600],
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    const SizedBox(height: 6),
+                                    Row(
+                                      children: [
+                                        Icon(
                                           Icons.people,
                                           size: 16,
                                           color: Colors.grey[600],

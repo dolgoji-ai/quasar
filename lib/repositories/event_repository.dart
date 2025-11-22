@@ -16,6 +16,8 @@ class EventRepository {
       host: '임하은',
       imageUrl: 'https://picsum.photos/200/200?random=8',
       eventDate: DateTime(2025, 12, 28, 19, 0),
+      location: '서울시 강남구',
+      locationDetails: '서울시 강남구 테헤란로 152',
       memberList: [
         Member(name: '임하은', phoneNumber: '010-1234-5678'),
         Member(name: '김철수', phoneNumber: '010-2345-6789'),
@@ -29,6 +31,8 @@ class EventRepository {
       host: 'dolgoji-ai',
       imageUrl: 'https://picsum.photos/200/200?random=2',
       eventDate: DateTime(2025, 11, 19, 18, 0),
+      location: '경기도 성남시',
+      locationDetails: '경기도 성남시 분당구 판교역로 235',
       memberList: [
         Member(name: 'dolgoji-ai', phoneNumber: '010-4567-8901'),
         Member(name: '박지성', phoneNumber: '010-5678-9012'),
@@ -41,6 +45,8 @@ class EventRepository {
       host: '최동욱',
       imageUrl: 'https://picsum.photos/200/200?random=5',
       eventDate: DateTime(2025, 11, 16, 14, 0),
+      location: '서울시 송파구',
+      locationDetails: '서울시 송파구 올림픽로 300',
       memberList: [
         Member(name: '최동욱', phoneNumber: '010-6789-0123'),
         Member(name: '정수아', phoneNumber: '010-7890-1234'),
@@ -55,6 +61,8 @@ class EventRepository {
       host: '한유진',
       imageUrl: 'https://picsum.photos/200/200?random=10',
       eventDate: DateTime(2025, 6, 20, 9, 0),
+      location: '경기도 용인시',
+      locationDetails: '경기도 용인시 처인구 포곡읍 에버랜드로 199',
       memberList: [
         Member(name: '한유진', phoneNumber: '010-0123-4567'),
         Member(name: '오세훈', phoneNumber: '010-1235-6789'),
@@ -70,6 +78,8 @@ class EventRepository {
       host: '윤지훈',
       imageUrl: 'https://picsum.photos/200/200?random=7',
       eventDate: DateTime(2025, 5, 5, 18, 30),
+      location: '서울시 마포구',
+      locationDetails: '서울시 마포구 와우산로 94',
       memberList: [Member(name: '윤지훈', phoneNumber: '010-5679-0123')],
     ),
     Event(
@@ -79,6 +89,8 @@ class EventRepository {
       host: 'dolgoji-ai',
       imageUrl: 'https://picsum.photos/200/200?random=4',
       eventDate: DateTime(2025, 3, 10, 10, 0),
+      location: '서울시 서초구',
+      locationDetails: '서울시 서초구 강남대로 213',
       memberList: [
         Member(name: 'dolgoji-ai', phoneNumber: '010-6780-1234'),
         Member(name: '이서준', phoneNumber: '010-7891-2345'),
@@ -92,6 +104,8 @@ class EventRepository {
       host: '김철수',
       imageUrl: 'https://picsum.photos/200/200?random=1',
       eventDate: DateTime(2025, 1, 15, 18, 0),
+      location: '경기도 수원시',
+      locationDetails: '경기도 수원시 팔달구 정조로 825',
       memberList: [
         Member(name: '김철수', phoneNumber: '010-9013-4567'),
         Member(name: '박민수', phoneNumber: '010-0124-5678'),
@@ -106,6 +120,8 @@ class EventRepository {
       host: '이민호',
       imageUrl: 'https://picsum.photos/200/200?random=3',
       eventDate: DateTime(2024, 12, 20, 19, 30),
+      location: '서울시 종로구',
+      locationDetails: '서울시 종로구 세종대로 209',
       memberList: [
         Member(name: '이민호', phoneNumber: '010-3458-9012'),
         Member(name: '권나영', phoneNumber: '010-4569-0123'),
@@ -118,6 +134,8 @@ class EventRepository {
       host: 'dolgoji-ai',
       imageUrl: 'https://picsum.photos/200/200?random=6',
       eventDate: DateTime(2024, 11, 30, 15, 30),
+      location: '경기도 고양시',
+      locationDetails: '경기도 고양시 일산동구 장백로 195',
       memberList: [
         Member(name: 'dolgoji-ai', phoneNumber: '010-5670-1234'),
         Member(name: '조윤아', phoneNumber: '010-6781-2345'),
@@ -133,6 +151,8 @@ class EventRepository {
       host: '서준호',
       imageUrl: 'https://picsum.photos/200/200?random=9',
       eventDate: DateTime(2024, 10, 15, 20, 0),
+      location: '서울시 영등포구',
+      locationDetails: '서울시 영등포구 국제금융로 10',
       memberList: [
         Member(name: '서준호', phoneNumber: '010-0125-6789'),
         Member(name: '노지훈', phoneNumber: '010-1237-8901'),
