@@ -45,22 +45,6 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    if (!_isInitialized) {
-      return MaterialApp(
-        theme: ThemeData(
-          useMaterial3: true,
-          scaffoldBackgroundColor: Colors.white,
-          appBarTheme: const AppBarTheme(
-            backgroundColor: Colors.white,
-            elevation: 0,
-            scrolledUnderElevation: 0,
-            centerTitle: true,
-          ),
-        ),
-        home: const Scaffold(body: Center(child: CircularProgressIndicator())),
-      );
-    }
-
     return MaterialApp.router(
       title: 'Quasar',
       theme: ThemeData(
@@ -101,6 +85,14 @@ class _MyAppState extends State<MyApp> {
         ).copyWith(primary: Colors.black),
       ),
       routerConfig: _appRouter.router,
+      builder: (context, child) {
+        if (!_isInitialized) {
+          return const Scaffold(
+            body: Center(child: CircularProgressIndicator()),
+          );
+        }
+        return child ?? const SizedBox.shrink();
+      },
     );
   }
 }
