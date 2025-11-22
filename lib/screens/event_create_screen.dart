@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-class EventCreatePage extends StatefulWidget {
-  const EventCreatePage({super.key});
+class EventCreateScreen extends StatefulWidget {
+  const EventCreateScreen({super.key});
 
   @override
-  State<EventCreatePage> createState() => _EventCreatePageState();
+  State<EventCreateScreen> createState() => _EventCreateScreenState();
 }
 
-class _EventCreatePageState extends State<EventCreatePage> {
+class _EventCreateScreenState extends State<EventCreateScreen> {
   final TextEditingController _titleController = TextEditingController();
   final TextEditingController _descriptionController = TextEditingController();
   DateTime _selectedDate = DateTime.now();

@@ -6,14 +6,14 @@ import 'package:quasar/services/auth_service.dart';
 import 'package:quasar/utils/color_utils.dart';
 import 'package:quasar/utils/date_utils.dart';
 
-class EventListContent extends StatefulWidget {
-  const EventListContent({super.key});
+class EventListScreen extends StatefulWidget {
+  const EventListScreen({super.key});
 
   @override
-  State<EventListContent> createState() => _EventListContentState();
+  State<EventListScreen> createState() => _EventListScreenState();
 }
 
-class _EventListContentState extends State<EventListContent> {
+class _EventListScreenState extends State<EventListScreen> {
   final AuthService _authService = AuthService();
   final EventRepository _eventRepository = EventRepository();
   List<Event> events = [];

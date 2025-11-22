@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_contacts/flutter_contacts.dart';
 import 'package:permission_handler/permission_handler.dart';
 
-class ContactsPage extends StatefulWidget {
-  const ContactsPage({super.key});
+class ContactsScreen extends StatefulWidget {
+  const ContactsScreen({super.key});
 
   @override
-  State<ContactsPage> createState() => _ContactsPageState();
+  State<ContactsScreen> createState() => _ContactsScreenState();
 }
 
-class _ContactsPageState extends State<ContactsPage> {
+class _ContactsScreenState extends State<ContactsScreen> {
   List<Contact> _contacts = [];
   bool _isLoading = true;
   bool _hasPermission = false;

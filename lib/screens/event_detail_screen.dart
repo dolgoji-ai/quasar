@@ -5,16 +5,16 @@ import 'package:quasar/repositories/event_repository.dart';
 import 'package:quasar/utils/color_utils.dart';
 import 'package:quasar/utils/date_utils.dart';
 
-class EventDetailPage extends StatefulWidget {
+class EventDetailScreen extends StatefulWidget {
   final Event event;
 
-  const EventDetailPage({super.key, required this.event});
+  const EventDetailScreen({super.key, required this.event});
 
   @override
-  State<EventDetailPage> createState() => _EventDetailPageState();
+  State<EventDetailScreen> createState() => _EventDetailScreenState();
 }
 
-class _EventDetailPageState extends State<EventDetailPage> {
+class _EventDetailScreenState extends State<EventDetailScreen> {
   final EventRepository _eventRepository = EventRepository();
   late Event _currentEvent;
   bool isLoading = false;

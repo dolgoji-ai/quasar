@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:quasar/models/event.dart';
-import 'package:quasar/screens/contacts_page.dart';
-import 'package:quasar/screens/event_create_page.dart';
-import 'package:quasar/screens/event_detail_page.dart';
-import 'package:quasar/screens/event_list_page.dart';
-import 'package:quasar/screens/explore_page.dart';
-import 'package:quasar/screens/gallery_page.dart';
-import 'package:quasar/screens/login_page.dart';
-import 'package:quasar/screens/profile_page.dart';
+import 'package:quasar/screens/contacts_screen.dart';
+import 'package:quasar/screens/event_create_screen.dart';
+import 'package:quasar/screens/event_detail_screen.dart';
+import 'package:quasar/screens/event_list_screen.dart';
+import 'package:quasar/screens/explore_screen.dart';
+import 'package:quasar/screens/gallery_screen.dart';
+import 'package:quasar/screens/login_screen.dart';
+import 'package:quasar/screens/profile_screen.dart';
 import 'package:quasar/services/auth_service.dart';
 import 'package:quasar/widgets/app_bottom_nav_bar_widget.dart';
 
@@ -39,7 +39,7 @@ class AppRouter {
     routes: [
       GoRoute(
         path: '/login',
-        builder: (context, state) => LoginPage(authService: authService),
+        builder: (context, state) => LoginScreen(authService: authService),
       ),
       StatefulShellRoute.indexedStack(
         builder: (context, state, navigationShell) {
@@ -50,17 +50,17 @@ class AppRouter {
             routes: [
               GoRoute(
                 path: '/events',
-                builder: (context, state) => const EventListContent(),
+                builder: (context, state) => const EventListScreen(),
                 routes: [
                   GoRoute(
                     path: '/create',
-                    builder: (context, state) => const EventCreatePage(),
+                    builder: (context, state) => const EventCreateScreen(),
                   ),
                   GoRoute(
                     path: '/:id',
                     builder: (context, state) {
                       final event = state.extra as Event;
-                      return EventDetailPage(event: event);
+                      return EventDetailScreen(event: event);
                     },
                   ),
                 ],
@@ -71,7 +71,7 @@ class AppRouter {
             routes: [
               GoRoute(
                 path: '/contacts',
-                builder: (context, state) => const ContactsPage(),
+                builder: (context, state) => const ContactsScreen(),
               ),
             ],
           ),
@@ -79,7 +79,7 @@ class AppRouter {
             routes: [
               GoRoute(
                 path: '/explore',
-                builder: (context, state) => const ExplorePage(),
+                builder: (context, state) => const ExploreScreen(),
               ),
             ],
           ),
@@ -87,7 +87,7 @@ class AppRouter {
             routes: [
               GoRoute(
                 path: '/gallery',
-                builder: (context, state) => const GalleryPage(),
+                builder: (context, state) => const GalleryScreen(),
               ),
             ],
           ),
@@ -95,7 +95,7 @@ class AppRouter {
             routes: [
               GoRoute(
                 path: '/profile',
-                builder: (context, state) => const ProfilePage(),
+                builder: (context, state) => const ProfileScreen(),
               ),
             ],
           ),
