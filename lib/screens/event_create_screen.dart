@@ -11,6 +11,9 @@ class EventCreateScreen extends StatefulWidget {
 class _EventCreateScreenState extends State<EventCreateScreen> {
   final TextEditingController _titleController = TextEditingController();
   final TextEditingController _descriptionController = TextEditingController();
+  final TextEditingController _locationController = TextEditingController();
+  final TextEditingController _locationDetailsController =
+      TextEditingController();
   DateTime _selectedDate = DateTime.now();
   DateTime _selectedTime = DateTime.now();
   int? _selectedImageIndex;
@@ -37,6 +40,8 @@ class _EventCreateScreenState extends State<EventCreateScreen> {
   void dispose() {
     _titleController.dispose();
     _descriptionController.dispose();
+    _locationController.dispose();
+    _locationDetailsController.dispose();
     super.dispose();
   }
 
@@ -325,6 +330,40 @@ class _EventCreateScreenState extends State<EventCreateScreen> {
                       ),
                     ],
                   ),
+                ),
+              ),
+              const SizedBox(height: 20),
+              Text(
+                '장소 (간략)',
+                style: Theme.of(
+                  context,
+                ).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w600),
+              ),
+              const SizedBox(height: 8),
+              TextField(
+                controller: _locationController,
+                decoration: InputDecoration(
+                  hintText: '예: 서울시 강남구',
+                  border: const OutlineInputBorder(),
+                  filled: true,
+                  fillColor: Theme.of(context).scaffoldBackgroundColor,
+                ),
+              ),
+              const SizedBox(height: 20),
+              Text(
+                '장소 (상세)',
+                style: Theme.of(
+                  context,
+                ).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w600),
+              ),
+              const SizedBox(height: 8),
+              TextField(
+                controller: _locationDetailsController,
+                decoration: InputDecoration(
+                  hintText: '예: 서울시 강남구 테헤란로 152',
+                  border: const OutlineInputBorder(),
+                  filled: true,
+                  fillColor: Theme.of(context).scaffoldBackgroundColor,
                 ),
               ),
             ],
