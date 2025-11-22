@@ -95,6 +95,10 @@ class _MyAppState extends State<MyApp> {
           selectedColor: Colors.grey[350],
           elevation: 0,
         ),
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: Colors.white,
+          brightness: Brightness.light,
+        ).copyWith(primary: Colors.black),
       ),
       routerConfig: _appRouter.router,
     );
