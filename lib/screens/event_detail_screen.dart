@@ -50,6 +50,12 @@ class _EventDetailScreenState extends State<EventDetailScreen> {
           icon: const Icon(Icons.arrow_back),
           onPressed: () => context.pop(),
         ),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.notifications_outlined),
+            onPressed: () => context.push('/notifications'),
+          ),
+        ],
       ),
       body: SafeArea(
         child: RefreshIndicator(

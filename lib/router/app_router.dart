@@ -8,6 +8,7 @@ import 'package:quasar/screens/event_list_screen.dart';
 import 'package:quasar/screens/explore_screen.dart';
 import 'package:quasar/screens/gallery_screen.dart';
 import 'package:quasar/screens/login_screen.dart';
+import 'package:quasar/screens/notification_screen.dart';
 import 'package:quasar/screens/profile_screen.dart';
 import 'package:quasar/services/auth_service.dart';
 import 'package:quasar/widgets/app_bottom_nav_bar_widget.dart';
@@ -40,6 +41,11 @@ class AppRouter {
       GoRoute(
         path: '/login',
         builder: (context, state) => LoginScreen(authService: authService),
+      ),
+      GoRoute(
+        path: '/notifications',
+        parentNavigatorKey: _rootNavigatorKey,
+        builder: (context, state) => const NotificationScreen(),
       ),
       StatefulShellRoute.indexedStack(
         builder: (context, state, navigationShell) {

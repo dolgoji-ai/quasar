@@ -173,6 +173,10 @@ class _EventCreateScreenState extends State<EventCreateScreen> {
       appBar: AppBar(
         title: const Text('이벤트 등록'),
         actions: [
+          IconButton(
+            icon: const Icon(Icons.notifications_outlined),
+            onPressed: () => context.push('/notifications'),
+          ),
           TextButton(
             onPressed: () {},
             child: const Text('저장', style: TextStyle(fontSize: 20)),

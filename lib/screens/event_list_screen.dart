@@ -50,7 +50,15 @@ class _EventListScreenState extends State<EventListScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('이벤트 목록')),
+      appBar: AppBar(
+        title: const Text('이벤트 목록'),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.notifications_outlined),
+            onPressed: () => context.push('/notifications'),
+          ),
+        ],
+      ),
       floatingActionButton: SizedBox(
         width: 52,
         height: 52,

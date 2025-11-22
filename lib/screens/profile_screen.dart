@@ -40,7 +40,15 @@ class ProfileScreen extends StatelessWidget {
     final authService = AuthService();
 
     return Scaffold(
-      appBar: AppBar(title: const Text('프로필')),
+      appBar: AppBar(
+        title: const Text('프로필'),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.notifications_outlined),
+            onPressed: () => context.push('/notifications'),
+          ),
+        ],
+      ),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(16),
