@@ -46,8 +46,18 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     if (!_isInitialized) {
-      return const MaterialApp(
-        home: Scaffold(body: Center(child: CircularProgressIndicator())),
+      return MaterialApp(
+        theme: ThemeData(
+          useMaterial3: true,
+          scaffoldBackgroundColor: Colors.white,
+          appBarTheme: const AppBarTheme(
+            backgroundColor: Colors.white,
+            elevation: 0,
+            scrolledUnderElevation: 0,
+            centerTitle: true,
+          ),
+        ),
+        home: const Scaffold(body: Center(child: CircularProgressIndicator())),
       );
     }
 
@@ -57,8 +67,9 @@ class _MyAppState extends State<MyApp> {
         brightness: Brightness.light,
         primarySwatch: Colors.blue,
         useMaterial3: true,
-        appBarTheme: AppBarTheme(
-          backgroundColor: ThemeData.light().scaffoldBackgroundColor,
+        scaffoldBackgroundColor: Colors.white,
+        appBarTheme: const AppBarTheme(
+          backgroundColor: Colors.white,
           elevation: 0,
           scrolledUnderElevation: 0,
           centerTitle: true,
@@ -78,6 +89,11 @@ class _MyAppState extends State<MyApp> {
         ),
         textButtonTheme: TextButtonThemeData(
           style: TextButton.styleFrom(elevation: 0),
+        ),
+        chipTheme: ChipThemeData(
+          backgroundColor: Colors.white,
+          selectedColor: Colors.grey[350],
+          elevation: 0,
         ),
       ),
       routerConfig: _appRouter.router,
