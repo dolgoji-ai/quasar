@@ -51,6 +51,21 @@ class _EventListScreenState extends State<EventListScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text('이벤트 목록')),
+      floatingActionButton: SizedBox(
+        width: 52,
+        height: 52,
+        child: FloatingActionButton(
+          onPressed: () => context.go('/events/create'),
+          elevation: 0,
+          backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+          splashColor: Colors.transparent,
+          highlightElevation: 0,
+          shape: CircleBorder(
+            side: BorderSide(color: Colors.grey[300]!, width: 1),
+          ),
+          child: const Icon(Icons.add, size: 28),
+        ),
+      ),
       body: SafeArea(
         child: RefreshIndicator(
           onRefresh: _loadEvents,
@@ -72,13 +87,6 @@ class _EventListScreenState extends State<EventListScreen> {
                   padding: const EdgeInsets.fromLTRB(16, 0, 16, 4),
                   child: Row(
                     children: [
-                      FilterChip(
-                        onSelected: (_) => context.go('/events/create'),
-                        label: const Icon(Icons.add, size: 16),
-                        selected: false,
-                        showCheckmark: false,
-                      ),
-                      const SizedBox(width: 8),
                       FilterChip(
                         label: const Text('Upcoming'),
                         selected: showUpcomingOnly,
