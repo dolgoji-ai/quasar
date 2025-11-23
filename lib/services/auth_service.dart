@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 class AuthService {
@@ -16,30 +17,59 @@ class AuthService {
     scopes: ['email', 'profile'],
   );
 
+  final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
+
   GoogleSignInAccount? _currentUser;
 
   GoogleSignInAccount? get currentUser => _currentUser;
 
-  bool get isSignedIn => _currentUser != null;
+  User? get firebaseUser => _firebaseAuth.currentUser;
 
-  String get userName => _currentUser?.displayName ?? '';
+  bool get isSignedIn => _firebaseAuth.currentUser != null;
 
-  String get userEmail => _currentUser?.email ?? '';
+  String get userName =>
+      _firebaseAuth.currentUser?.displayName ?? _currentUser?.displayName ?? '';
 
-  String get userPhotoUrl => _currentUser?.photoUrl ?? '';
+  String get userEmail =>
+      _firebaseAuth.currentUser?.email ?? _currentUser?.email ?? '';
+
+  String get userPhotoUrl =>
+      _firebaseAuth.currentUser?.photoURL ?? _currentUser?.photoUrl ?? '';
 
   Future<void> init() async {
-    _googleSignIn.onCurrentUserChanged.listen((account) {
+    _googleSignIn.onCurrentUserChanged.listen((account) async {
       _currentUser = account;
+      if (account != null) {
+        await _signInWithFirebase(account);
+      }
     });
 
     await _googleSignIn.signInSilently();
+  }
+
+  Future<void> _signInWithFirebase(GoogleSignInAccount googleUser) async {
+    try {
+      final GoogleSignInAuthentication googleAuth =
+          await googleUser.authentication;
+
+      final credential = GoogleAuthProvider.credential(
+        accessToken: googleAuth.accessToken,
+        idToken: googleAuth.idToken,
+      );
+
+      await _firebaseAuth.signInWithCredential(credential);
+    } catch (error) {
+      rethrow;
+    }
   }
 
   Future<GoogleSignInAccount?> signIn() async {
     try {
       final account = await _googleSignIn.signIn();
       _currentUser = account;
+      if (account != null) {
+        await _signInWithFirebase(account);
+      }
       return account;
     } catch (error) {
       rethrow;
@@ -48,6 +78,7 @@ class AuthService {
 
   Future<void> signOut() async {
     await _googleSignIn.signOut();
+    await _firebaseAuth.signOut();
     _currentUser = null;
   }
 

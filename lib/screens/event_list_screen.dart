@@ -33,8 +33,11 @@ class _EventListScreenState extends State<EventListScreen> {
     });
 
     final loadedEvents = await _eventRepository.getEvents(
-      upcomingOnly: showUpcomingOnly,
       hostFilter: showHostingOnly ? _authService.userName : null,
+      fromDateFilter: showUpcomingOnly ? DateTime.now() : null,
+      toDateFilter: showUpcomingOnly
+          ? DateTime.now().add(const Duration(days: 7))
+          : null,
     );
 
     setState(() {
@@ -63,7 +66,12 @@ class _EventListScreenState extends State<EventListScreen> {
         width: 52,
         height: 52,
         child: FloatingActionButton(
-          onPressed: () => context.go('/events/create'),
+          onPressed: () async {
+            final result = await context.push('/events/create');
+            if (result == true) {
+              _loadEvents();
+            }
+          },
           elevation: 0,
           backgroundColor: Theme.of(context).scaffoldBackgroundColor,
           splashColor: Colors.transparent,

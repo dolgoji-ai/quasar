@@ -1,0 +1,38 @@
+{
+  "project_info": {
+    "project_number": "723499743428",
+    "project_id": "quasar-2c242",
+    "storage_bucket": "quasar-2c242.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:723499743428:android:1718478e1973d50b607191",
+        "android_client_info": {
+          "package_name": "com.quasar.quasar"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "723499743428-cgreia6c3pgdavgbppsvgr9a1mi8pe2t.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.quasar.quasar",
+            "certificate_hash": "1cf24a514ce2a347eb4a95bec6d6ea63c5a997b8"
+          }
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAmTZiLAyDlKY7H63TdFAu5grqonsEXgFw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

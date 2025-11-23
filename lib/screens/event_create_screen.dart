@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:quasar/enums/event_status.dart';
+import 'package:quasar/models/event.dart';
+import 'package:quasar/repositories/event_repository.dart';
+import 'package:quasar/services/auth_service.dart';
 
 class EventCreateScreen extends StatefulWidget {
   const EventCreateScreen({super.key});
@@ -17,6 +21,10 @@ class _EventCreateScreenState extends State<EventCreateScreen> {
   DateTime _selectedDate = DateTime.now();
   DateTime _selectedTime = DateTime.now();
   int? _selectedImageIndex;
+  bool _isSaving = false;
+
+  final EventRepository _eventRepository = EventRepository();
+  final AuthService _authService = AuthService();
 
   final List<String> _availableImages = [
     'https://picsum.photos/200/200?random=1',
@@ -167,6 +175,73 @@ class _EventCreateScreenState extends State<EventCreateScreen> {
     return '$hour:$minute';
   }
 
+  Future<void> _saveEvent() async {
+    if (_titleController.text.trim().isEmpty) {
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(const SnackBar(content: Text('제목을 입력해주세요')));
+      return;
+    }
+
+    if (_locationController.text.trim().isEmpty) {
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(const SnackBar(content: Text('장소를 입력해주세요')));
+      return;
+    }
+
+    setState(() {
+      _isSaving = true;
+    });
+
+    try {
+      final eventDateTime = DateTime(
+        _selectedDate.year,
+        _selectedDate.month,
+        _selectedDate.day,
+        _selectedTime.hour,
+        _selectedTime.minute,
+      );
+
+      final event = Event(
+        id: DateTime.now().millisecondsSinceEpoch.toString(),
+        status: EventStatus.scheduled,
+        title: _titleController.text.trim(),
+        host: _authService.userName.isNotEmpty
+            ? _authService.userName
+            : 'Unknown',
+        imageUrl: _selectedImageIndex != null
+            ? _availableImages[_selectedImageIndex!]
+            : _availableImages[0],
+        eventDate: eventDateTime,
+        location: _locationController.text.trim(),
+        locationDetails: _locationDetailsController.text.trim(),
+        memberList: [],
+      );
+
+      await _eventRepository.createEvent(event);
+
+      if (mounted) {
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(const SnackBar(content: Text('이벤트가 등록되었습니다')));
+        context.pop(true);
+      }
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text('이벤트 등록 실패: $e')));
+      }
+    } finally {
+      if (mounted) {
+        setState(() {
+          _isSaving = false;
+        });
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -178,8 +253,14 @@ class _EventCreateScreenState extends State<EventCreateScreen> {
             onPressed: () => context.push('/notifications'),
           ),
           TextButton(
-            onPressed: () {},
-            child: const Text('저장', style: TextStyle(fontSize: 20)),
+            onPressed: _isSaving ? null : _saveEvent,
+            child: _isSaving
+                ? const SizedBox(
+                    width: 20,
+                    height: 20,
+                    child: CircularProgressIndicator(strokeWidth: 2),
+                  )
+                : const Text('저장', style: TextStyle(fontSize: 20)),
           ),
         ],
       ),
